@@ -7,20 +7,20 @@ route: /
 
 ## Using yarn
 ```bash
-yarn add react-use-fetcher
+yarn add 'use-fetcher-react'
 ```
 
 ### Using npm
 ```bash
-npm install react-use-fetcher
+npm install 'use-fetcher-react'
 ```
 
 # Usage
-`react-use-fetcher` exposes a component `Fetcher` that you are supposed to wrap around your content.  
+`'use-fetcher-react'` exposes a component `Fetcher` that you are supposed to wrap around your content.  
 That components handle automatically these fetching status: idle, loading, error.  
 ```jsx
 import React from 'react';
-import { Fetcher } from 'react-use-fetcher';
+import { Fetcher } from ''use-fetcher-react'';
 
 const MyComponent = () => {
   return (
@@ -34,12 +34,12 @@ const MyComponent = () => {
 ```
 
 But this won't do much in its own.  
-`react-use-fetcher` also exposes `useFetcher` which return a Fetcher API. You can interact with it
+`'use-fetcher-react'` also exposes `useFetcher` which return a Fetcher API. You can interact with it
 inside your component and any visual feedback will be handled by the `Fetcher` component, with the condition
 that you pass the API as a prop.  
 ```jsx
 import React, { useEffect } from 'react';
-import { useFetcher, Fetcher } from 'react-use-fetcher';
+import { useFetcher, Fetcher } from ''use-fetcher-react'';
 
 const MyComponent = () => {
   const fetcher = useFetcher();
@@ -59,4 +59,11 @@ const MyComponent = () => {
 Here's a minimal example of a component fetching being handled by `Fetcher`.  
 The component **doesn't** have to react to the HTTP response nor does it have to show any loading feeback.  
 All of that is handled by `Fetcher` automatically.  
+
+import { Playground } from 'docz';
+import MinimalExample from '../src/components/MinimalExample';
+
+<Playground>
+  <MinimalExample />
+</Playground>
 

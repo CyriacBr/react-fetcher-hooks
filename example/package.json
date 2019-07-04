@@ -1,5 +1,5 @@
 {
-  "name": "react-use-fetcher-example",
+  "name": "use-fetcher-react-example",
   "homepage": "https://CyriacBr.github.io/react-use-fetcher",
   "version": "0.0.0",
   "license": "MIT",
@@ -9,7 +9,8 @@
     "prop-types": "^15.6.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-scripts": "^1.1.4"
+    "react-scripts": "^1.1.4",
+    "use-fetcher-react": "^0.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

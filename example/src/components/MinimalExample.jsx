@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useFetcher, Fetcher } from 'react-use-fetcher';
+import { useFetcher, Fetcher } from 'use-fetcher-react';
 import axios from 'axios';
 
 const MinimalExample = () => {

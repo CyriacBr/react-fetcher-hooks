@@ -1,6 +1,6 @@
 {
-  "name": "react-use-fetcher",
-  "version": "0.0.1",
+  "name": "use-fetcher-react",
+  "version": "0.0.2",
   "description": "",
   "author": "CyriacBr",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "test:watch": "react-scripts-ts test --env=jsdom",
     "build": "rollup -c",
     "start": "rollup -c -w",
+    "postbuild": "cp src/styles.css dist",
     "prepare": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"

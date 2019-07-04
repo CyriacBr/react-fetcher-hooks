@@ -1,5 +1,5 @@
 export default `import React from 'react';
-import { useFetcher, Fetcher } from 'react-use-fetcher';
+import { useFetcher, Fetcher } from 'use-fetcher-react';
 
 const MyComponent = () => {
   return (
