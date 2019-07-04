@@ -1,6 +1,6 @@
 {
   "name": "react-use-fetcher",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "author": "CyriacBr",
   "license": "MIT",
@@ -21,11 +21,18 @@
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.19.0",
+    "loaders.css": "^0.1.2",
+    "react-block-ui": "^1.1.4",
+    "react-loaders": "^3.0.1",
+    "react-spinners": "^0.5.4",
+    "styled-components": "^4.3.2"
+  },
   "peerDependencies": {
     "prop-types": "^15.5.4",
-    "react": "^15.0.0 || ^16.0.0",
-    "react-dom": "^15.0.0 || ^16.0.0"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   },
   "devDependencies": {
     "@svgr/rollup": "^2.4.1",

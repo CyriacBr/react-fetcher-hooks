@@ -1,0 +1,62 @@
+---
+name: Getting Started
+route: /
+---
+
+# Installation
+
+## Using yarn
+```bash
+yarn add react-use-fetcher
+```
+
+### Using npm
+```bash
+npm install react-use-fetcher
+```
+
+# Usage
+`react-use-fetcher` exposes a component `Fetcher` that you are supposed to wrap around your content.  
+That components handle automatically these fetching status: idle, loading, error.  
+```jsx
+import React from 'react';
+import { Fetcher } from 'react-use-fetcher';
+
+const MyComponent = () => {
+  return (
+    <div>
+      <Fetcher>
+        My content
+      </Fetcher>
+    </div>
+  );
+}
+```
+
+But this won't do much in its own.  
+`react-use-fetcher` also exposes `useFetcher` which return a Fetcher API. You can interact with it
+inside your component and any visual feedback will be handled by the `Fetcher` component, with the condition
+that you pass the API as a prop.  
+```jsx
+import React, { useEffect } from 'react';
+import { useFetcher, Fetcher } from 'react-use-fetcher';
+
+const MyComponent = () => {
+  const fetcher = useFetcher();
+  useEffect(() => fetcher.setLoading(true), []);
+
+  return (
+    <div>
+      <Fetcher>
+        My content
+      </Fetcher>
+    </div>
+  );
+}
+```
+
+## Minimal Example
+Here's a minimal example of a component fetching being handled by `Fetcher`.  
+The component **doesn't** have to react to the HTTP response nor does it have to show any loading feeback.  
+All of that is handled by `Fetcher` automatically.  
+
