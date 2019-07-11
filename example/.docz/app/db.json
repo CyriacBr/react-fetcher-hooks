@@ -1,6 +1,6 @@
 {
   "config": {
-    "title": "Use Fetcher React Example",
+    "title": "Use Fetcher React Docs",
     "description": "My awesome app using docz",
     "menu": [],
     "version": "0.0.0",
@@ -29,13 +29,18 @@
             "value": "Installation"
           },
           {
+            "slug": "why",
+            "depth": 2,
+            "value": "Why?"
+          },
+          {
             "slug": "using-yarn",
             "depth": 2,
             "value": "Using yarn"
           },
           {
             "slug": "using-npm",
-            "depth": 3,
+            "depth": 2,
             "value": "Using npm"
           },
           {
@@ -47,6 +52,51 @@
             "slug": "minimal-example",
             "depth": 2,
             "value": "Minimal Example"
+          },
+          {
+            "slug": "custom-promise",
+            "depth": 2,
+            "value": "Custom Promise"
+          },
+          {
+            "slug": "fetching-states",
+            "depth": 2,
+            "value": "Fetching States"
+          },
+          {
+            "slug": "loading",
+            "depth": 3,
+            "value": "Loading"
+          },
+          {
+            "slug": "error",
+            "depth": 3,
+            "value": "Error"
+          },
+          {
+            "slug": "options",
+            "depth": 2,
+            "value": "Options"
+          },
+          {
+            "slug": "example",
+            "depth": 3,
+            "value": "Example"
+          },
+          {
+            "slug": "example-1",
+            "depth": 4,
+            "value": "Example 1"
+          },
+          {
+            "slug": "example-2",
+            "depth": 4,
+            "value": "Example 2"
+          },
+          {
+            "slug": "customizing-css",
+            "depth": 2,
+            "value": "Customizing CSS"
           }
         ]
       }

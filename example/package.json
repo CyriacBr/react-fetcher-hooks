@@ -1,5 +1,5 @@
 {
-  "name": "use-fetcher-react-example",
+  "name": "use-fetcher-react-docs",
   "homepage": "https://CyriacBr.github.io/react-use-fetcher",
   "version": "0.0.0",
   "license": "MIT",
@@ -7,10 +7,11 @@
   "dependencies": {
     "bulma": "^0.7.5",
     "prop-types": "^15.6.2",
+    "raw-loader": "^3.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "^1.1.4",
-    "use-fetcher-react": "^0.0.1"
+    "use-fetcher-react": "link: .."
   },
   "scripts": {
     "start": "react-scripts start",
@@ -21,8 +22,8 @@
     "docz:build": "docz build"
   },
   "devDependencies": {
-    "docz": "^1.2.0",
-    "docz-theme-default": "^1.2.0"
+    "docz": "latest",
+    "docz-theme-default": "latest"
   },
   "resolutions": {
     "react": "^16.8.6",

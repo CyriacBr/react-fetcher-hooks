@@ -60,7 +60,7 @@ pre {
   margin-top: 0;
   margin-right: 0;
   box-shadow: 0 8px 12px rgba(60, 90, 120, 0.1);
-  background: rgb(251, 252, 253);
+  background: #ced4de;
   overflow: auto;
   border-radius: 0.5em;
 }

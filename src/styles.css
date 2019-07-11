@@ -19,3 +19,39 @@
   flex-direction: column;
   align-items: center;
 }
+
+.fetcher-error > span {
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  background: #ffffffc4;
+  padding: 0.5em;
+  box-shadow: 0 8px 12px rgba(60, 90, 120, 0.1);
+  border-radius: 0.5em;
+}
+
+.progress-wrapper {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.progress-wrapper .bar {
+  z-index: 1031;
+  width: 100%;
+  height: 2px;
+  transition: all 200ms ease 0s;
+}
+
+.progress-wrapper .peg {
+  display: block;
+  position: absolute;
+  right: 0px;
+  width: 100px;
+  height: 100%;
+  opacity: 1.0;
+  -webkit-transform: rotate(3deg) translate(0px, -4px);
+  -ms-transform: rotate(3deg) translate(0px, -4px);
+  transform: rotate(3deg) translate(0px, -4px);
+}

@@ -1,23 +1,24 @@
 import React from 'react';
-import Examples from './components/Examples';
-import Usage1 from './data/Usage1';
+import MinimalLoadingExample from './components/MinimalLoadingExample';
+import MinimalExample from './components/MinimalExample';
+import MinimalErrorExample from './components/MinimalErrorExample';
+import MinimalOptionsExample from './components/MinimalOptionsExample';
+import MinimalProgressExample from './components/MinimalProgressExample';
 
 const App = () => {
   return (
     <div className="app-container">
       <p className="title is-1">React Use Fetcher</p>
-      <h1 className="title">Usage</h1>
-      <h2 className="subtitle">Installation</h2>
-      <p>Using yarn:</p>
-      <pre>
-        <code className="language-bash">yarn add reac-use-fetcher</code>
-      </pre>
-      <p>Using npm:</p>
-      <pre>
-        <code className="language-bash">npm install reac-use-fetcher</code>
-      </pre>
-      <h1 className="title">Examples</h1>
-      <Examples />
+      <h3>Minimal</h3>
+      <MinimalExample />
+      <h3>Minimal Loading</h3>
+      <MinimalLoadingExample />
+      <h3>Minimal Error</h3>
+      <MinimalErrorExample />
+      <h3>Minimal Options</h3>
+      <MinimalOptionsExample />
+      <h3>Minimal Progress Example</h3>
+      <MinimalProgressExample />
     </div>
   );
 };
