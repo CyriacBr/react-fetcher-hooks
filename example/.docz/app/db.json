@@ -24,14 +24,14 @@
         "menu": "",
         "headings": [
           {
+            "slug": "why",
+            "depth": 1,
+            "value": "Why?"
+          },
+          {
             "slug": "installation",
             "depth": 1,
             "value": "Installation"
-          },
-          {
-            "slug": "why",
-            "depth": 2,
-            "value": "Why?"
           },
           {
             "slug": "using-yarn",
@@ -84,19 +84,29 @@
             "value": "Example"
           },
           {
-            "slug": "example-1",
+            "slug": "custom-button-error-message-and-loading-color",
             "depth": 4,
-            "value": "Example 1"
+            "value": "Custom button, error message and loading color"
           },
           {
-            "slug": "example-2",
+            "slug": "progress-bar",
             "depth": 4,
-            "value": "Example 2"
+            "value": "Progress bar"
+          },
+          {
+            "slug": "global-options",
+            "depth": 4,
+            "value": "Global Options"
           },
           {
             "slug": "customizing-css",
             "depth": 2,
             "value": "Customizing CSS"
+          },
+          {
+            "slug": "dashboard-example",
+            "depth": 2,
+            "value": "Dashboard Example"
           }
         ]
       }

@@ -17,9 +17,12 @@ const MinimalProgressExample = () => {
       }, 3000);
     });
   };
-  useEffect(() => {
+
+  const load = () => {
     fetcher.handle(doSomething(), _ => {});
-  }, []);
+  };
+
+  useEffect(() => load(), []);
 
   return (
     <div className="test-container">

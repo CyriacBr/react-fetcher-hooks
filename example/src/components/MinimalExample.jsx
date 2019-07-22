@@ -8,18 +8,22 @@ import '../index.css';
 const MinimalExample = () => {
   const fetcher = useFetcher();
   const [title, setTitle] = useState('No todo title');
-  useEffect(() => {
+
+  const load = () => {
     let randomId = Math.round(Math.random() * 100) + 1;
     let request = axios.get(`https://jsonplaceholder.typicode.com/todos/${randomId}`);
     fetcher.fetch(request, data => {
-      setTitle(`A random todo title: ${data.title}`);
+      setTitle(data.title);
     });
-  }, []);
+  };
+
+  useEffect(() => load(), []);
 
   return (
     <div className="test-container">
       <Fetcher fetcher={fetcher}>
-        <span>{title}</span>
+        <span><b>A random todo title: </b>{title}</span>
+        <a onClick={load}>Refresh</a>
       </Fetcher>
     </div>
   );

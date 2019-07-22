@@ -3,14 +3,14 @@ name: Getting Started
 route: /
 ---
 
-# Installation
-
-## Why?
-This package's goal is to take out of you the pain of manually handling fetching states (idle, loading, error)
+# Why?
+This goal of this package is to take away the pain of manually handling fetching states (idle, loading, error)
 for every one of your components. Just hand over an `AxiosResponse` object to Fetcher and let it handles the
 visual feedbacks and the what-ifs.  
 This is especially usefull for building SaaS and PaaS with numerous independant and small components.  
 (e.g a Sales Card, Message Box, Activities Card, etc)
+
+# Installation
 
 ## Using yarn
 ```bash
@@ -23,7 +23,7 @@ npm install use-fetcher-react
 ```
 
 # Usage
-`'use-fetcher-react'` exposes a component `Fetcher` that you are supposed to wrap around your content.  
+`use-fetcher-react` exposes a component `Fetcher` that you are supposed to wrap around your content.  
 That components handle automatically fetching and feedbacks rendering.  
 ```jsx
 import React from 'react';
@@ -40,8 +40,8 @@ const MyComponent = () => {
 }
 ```
 
-But this won't do much in its own.  
-`use-fetcher-react` also exposes `useFetcher` which return a `FetcherAPI` object. You can interact with it
+But this won't do much on its own.  
+`use-fetcher-react` also exposes `useFetcher` which returns a `FetcherAPI` object. You can interact with it
 inside your component and any visual feedback will be handled by `Fetcher`, with the condition
 that you pass the API as a prop.  
 ```jsx
@@ -71,7 +71,7 @@ There's no need for handling errors on this level. If any happens,
 the callback won't be called and a visual feedback will be displayed.
 
 ## Minimal Example
-Here's a minimal example of a component fetching being handled by `Fetcher`.  
+Here's a minimal example of a component's fetching being handled by `Fetcher`.  
 The component **doesn't** have to react to the HTTP response nor does it have to show any loading feeback.  
 All of that is handled by `Fetcher` automatically.  
 
@@ -120,54 +120,41 @@ import MinimalErrorExampleSource from '!raw-loader!../src/data/MinimalErrorExamp
   <MinimalErrorExample />
   <editor>{ MinimalErrorExampleSource }</editor>
 </Preview>  
-When an error is encountering while fetching resources, `Fetcher` display an 
+When an error is encountered while fetching resources, `Fetcher` displays an 
 error message as well as a button to retry the request. All of these can be customized as described bellow.
 
 ## Options
 
 When using `useFetch`, an options object can be passed as parameter.  
-* `errorMessage`: `string`  
-The error message to display when an error is caught.  
-Default is `'An error occured'`;  
-* `minDelay`: `number`  
-Minimal time to wait, in ms before collecting the request's response. usefull to display a proper loading
-feedback to the user.  
-Default is `500`.  
-* `loadingColor`: `string`  
-The color of the loading spinner. Defalt is `#36d7b7`.  
-* `buttonComponent`: `(props: { doRetry: () => void }) => JSX.Element`  
-A React component to render a custom button component.  
-* `loaderComponent`: `(props: { color: string}) => JSX.Element`  
-A React component to render a custom spinner.  
-* `errorComponent`: `(props: { options: FetcherOptions}) => JSX.Element`  
-A React component to render a custom error visual feedback. Note that if this is used, `buttonComponent` will be ignored.  
-* `wrapperClassCSS`: `string`  
-The `className` value of the `Fetcher` container. Default is `'fetcher-wrapper'`.  
-* `loadingClassCSS`: `string`  
-The `className` value of the element wrapping the loading spinner. Defalt is `'fetcher-loading`.  
-* `errorClassCSS`: `string`  
-The `className` value of the element wrapping the error feedback. Default is `'fetching-error-`.  
-* `progress.show`: `boolean`  
-Display a progress bar while fetching? Default is `false`.  
-* `progress.color`: `string`  
-The color of the progress bar. Default is `'#36d7b7'`.  
-* `progress.errorColor`: `string`  
-The color of the progress bar when an error happens. Default is `'#cd3f45'`;  
-* `progress.position`: `'top' | 'bottom' | 'left' | 'right'`  
-The position of the progress bar on the component. Default is `top`.  
-* `progress.tickDelay`: `{ min: number, max: number}`  
-In the loading state, the progress bar increases at each tick. This parameter defines how
-frequently ticks happen.  A random value is selected each time between `min` and `max`.  
-Default is `{ min: 500, max: 1000}`.
-* `progress.tickValue`: `{ min: number, max: number}`  
-Defines how much the bar grows at each tick. Default is `{ min: 2, max: 3}`.  
-A random value is selected each time between `min` and `max`.  
-* `progress.styles`: `React.CSSProperties`  
-Apply a style to the progress bar element.  
+
+| Option              | Type                                                 | Description                                                                                                                                                                        | Default Value            |
+| ------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| errorMessage        | string                                               | The error message to display when an error is caught.                                                                                                                              | An error occured         |
+| minDelay            | number                                               | Minimal time to wait, in ms before collecting the request's response. useful to display proper loading feedback to the user.                                                       | 500                      |
+| loadingColor        | string                                               | The color of the loading spinner.                                                                                                                                                  | #36d7b7                  |
+| buttonComponent     | (props: { doRetry: () => void }) => JSX.Element      | A React component to render a custom button component.                                                                                                                             | null                     |
+| loaderComponent     | (props: { color: string}) => JSX.Element             | A React component to render a custom spinner.                                                                                                                                      | null                     |
+| errorComponent      | (props: { options: FetcherOptions}) => JSX.Element   | A React component to render a custom error visual feedback. Note that if this is used, `buttonComponent` will be ignored.                                                          | null                     |
+| wrapperClassCSS     | string                                               | The `className` value of the `Fetcher` container.                                                                                                                                  | fetcher-wrapper          |
+| loadingClassCSS     | string                                               | The `className` value of the element wrapping the loading spinner.                                                                                                                 | fetcher-loading          |
+| errorClassCSS       | string                                               | The `className` value of the element wrapping the error feedback.                                                                                                                  | fetching-error           |
+| wrapperStyles       | React.CSSProperties                                  | A style object to apply to the wrapper element.                                                                                                                                    | {}                       |
+| loadingStyles       | React.CSSProperties                                  | A style object to apply to the loading element.                                                                                                                                    | {}                       |
+| errorStyles         | React.CSSProperties                                  | A style to apply to the error element.                                                                                                                                             | {}                       |
+| progress.show       | boolean                                              | Display a progress bar while fetching? Default is `false`.                                                                                                                         | false                    |
+| progress.color      | string                                               | The color of the progress bar.                                                                                                                                                     | #36d7b7                  |
+| progress.errorColor | string                                               | The color of the progress bar when an error happens.                                                                                                                               | #cd3f45                  |
+| progress.tickDelay  | { min: number, max: number}                          | In the loading state, the progress bar increases at each tick. This parameter defines how
+frequently ticks happen.  A random value is selected each time between `min` and `max`.  | { min: 500, max: 1000}   |
+| progress.tickValue  | { min: number, max: number}                          | Defines how much the bar grows at each tick.                                                                                                                                       | { min: 2, max: 3}        |
+| progress.styles     | React.CSSProperties                                  | A style object to apply the progress bar element.                                                                                                                                  | {}                       |
+|                     |                                                      |                                                                                                                                                                                    |                          |
+|                     |                                                      |                                                                                                                                                                                    |                          |
 
 ### Example
 
-#### Example 1
+#### Custom button, error message and loading color
+
 
 import MinimalOptionsExample from '../src/components/MinimalOptionsExample';
 import MinimalOptionsExampleSource from '!raw-loader!../src/data/MinimalOptionsExample.txt';
@@ -177,7 +164,7 @@ import MinimalOptionsExampleSource from '!raw-loader!../src/data/MinimalOptionsE
   <editor>{ MinimalOptionsExampleSource }</editor>
 </Preview>  
 
-#### Example 2
+#### Progress bar
 
 import MinimalProgressExample from '../src/components/MinimalProgressExample';
 import MinimalProgressExampleSource from '!raw-loader!../src/data/MinimalProgressExample.txt';
@@ -187,8 +174,27 @@ import MinimalProgressExampleSource from '!raw-loader!../src/data/MinimalProgres
   <editor>{ MinimalProgressExampleSource }</editor>
 </Preview>  
 
+#### Global Options  
+I recommend to define your Fetcher options as ES modules and export them throughout your 
+applications instead of defined them for each of your component that need some customization.  
+```ts
+import { myFetcherOptions } from '@/utils/fetcherOptions';
+
+// In your components
+const fetcher = useFetcher(myFetcherOptions);
+```  
+
 ## Customizing CSS
 Modify the following CSS classes:
 * fetcher-wrapper  
 * fetcher-error
 * fetching-loading
+
+## Dashboard Example
+
+import DashboardExample from '../src/components/DashboardExample';
+
+<Preview>
+  <DashboardExample />
+  <editor>{ MinimalOptionsExampleSource }</editor>
+</Preview>  

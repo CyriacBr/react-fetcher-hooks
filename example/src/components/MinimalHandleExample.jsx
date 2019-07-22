@@ -10,13 +10,16 @@ const MinimalHandleExample = () => {
   const doSomething = () => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        resolve();
+        resolve('foo');
       }, 3000);
     });
   };
-  useEffect(() => {
+
+  const load = () => {
     fetcher.handle(doSomething(), _ => {});
-  }, []);
+  }
+
+  useEffect(() => load(), []);
 
   return (
     <div className="test-container">
@@ -31,6 +34,7 @@ const MinimalHandleExample = () => {
           luctus feugiat nisl. Duis ultrices semper eros, vel sagittis sapien pharetra in. Fusce est
           mauris, rhoncus et molestie ut, faucibus non tortor. Vivamus accumsan blandit consectetur.
         </span>
+        <a onClick={load}>Refresh</a>
       </Fetcher>
     </div>
   );

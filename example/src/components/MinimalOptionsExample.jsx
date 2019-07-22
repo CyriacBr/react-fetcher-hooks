@@ -8,7 +8,7 @@ import 'bulma/css/bulma.css';
 
 const MinimalOptionsExample = () => {
   const fetcher = useFetcher({
-    errorMessage: "I don't think I will",
+    errorMessage: "Nope",
     loadingColor: '#209cee',
     minDelay: 2000,
     buttonComponent: ({ doRetry }) => (
@@ -17,6 +17,7 @@ const MinimalOptionsExample = () => {
       </a>
     )
   });
+
   useEffect(() => {
     let request = axios.get(`something.404`);
     fetcher.fetch(request, data => {});

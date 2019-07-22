@@ -91,8 +91,8 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
 
   const renderError = () => {
     let Button = options.buttonComponent;
-    //let Error = options.errorComponent;
-    //console.log('Error :', Error);
+    let Error = options.errorComponent;
+    console.log('Error :', Error);
     let { errorStyles, wrapperStyles, errorClassCSS, wrapperClassCSS } = options;
     return (
       <>
@@ -100,12 +100,14 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
           {options.progress.show && progress.show && (
             <Progress value={progress.value} color={progressColor} />
           )}
-          
+          {Error ? (
+            <Error options={options} />
+          ) : (
             <div className={errorClassCSS} style={errorStyles || {}}>
               <span>{options.errorMessage}</span>
               {Button ? <Button doRetry={onRetry} /> : <button onClick={onRetry}>Retry</button>}
             </div>
-          
+          )}
         </div>
         {children}
       </>

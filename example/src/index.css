@@ -31,6 +31,10 @@ pre {
   display: inline-block;
 }
 
+code {
+  font-size: 1em;
+}
+
 .token.tag {
   background-color: unset;
   font-size: unset;
@@ -75,4 +79,42 @@ pre {
 
 .my-footer {
   margin-top: 1em;
+}
+
+.dashboard-container {
+  background: #f2f2f2;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  flex: 1;
+  padding: 2em;
+  margin: 2em;
+  margin-top: 0;
+  margin-right: 0;
+  box-shadow: 0 8px 12px rgba(60, 90, 120, 0.1);
+  background: rgb(251,252,253);
+  overflow: auto;
+  border-radius: 0.5em;
+}
+
+.d-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.d-title {
+  text-transform: uppercase;
+  color: #8898aa;
+  font-size: .8em;
+}
+
+.d-value {
+  font-size: 1.25em;
+  font-weight: 600;
 }

@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosResponse, AxiosPromise } from 'axios';
 import { SetStateAction } from 'react';
 import { ProgressOptions } from '../Progress/useProgress';
 
@@ -48,9 +48,9 @@ export class FetcherAPI {
     onResult: (data: any) => void;
   };
   listeners: { [key: string]: Function[] };
-  options: FetcherOptions;
+  options: Partial<FetcherOptions>;
 
-  constructor(options?: FetcherOptions) {
+  constructor(options?: Partial<FetcherOptions>) {
     this.listeners = {};
     this.options = {
       errorMessage: 'An error occured',
@@ -109,7 +109,7 @@ export class FetcherAPI {
     }
   }
 
-  async fetch<T>(responsePromise: Promise<AxiosResponse<T>>, onResult: (data: T) => void) {
+  async fetch<T>(responsePromise: AxiosPromise<T>, onResult: (data: T) => void) {
     this.retryStatus = {
       type: 'fetch',
       promise: responsePromise,
@@ -210,7 +210,7 @@ export class FetcherAPI {
   }
 }
 
-export function useFetcher(options?: FetcherOptions) {
+export function useFetcher(options?: Partial<FetcherOptions>) {
   const api = new FetcherAPI(options);
   return api;
 }
