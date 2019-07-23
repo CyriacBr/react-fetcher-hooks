@@ -49,6 +49,11 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
 
   const containerElement = useRef(null);
   useEffect(() => {
+    adjustParentPosition();
+    adjustBorderRadius();
+  });
+
+  const adjustParentPosition = () => {
     let el = containerElement.current as HTMLElement;
     if (!el) return;
     let parent = el.parentElement as HTMLElement;
@@ -61,7 +66,19 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
         `react-use-fetcher cannot set this component's parent element position to 'relative'`
       );
     }
-  });
+  };
+
+  const adjustBorderRadius = () => {
+    if (!options.adjustBorderRadius) return;
+    let el = containerElement.current as HTMLElement;
+    if (!el) return;
+    let child = el.children[0] as HTMLElement;
+    if (child) {
+      el.style.borderRadius = child.style.borderRadius;
+    } else {
+      console.warn(`react-use-fetcher couldn't adjust the wrapper's border radius`);
+    }
+  };
 
   const onRetry = () => {
     fetcher.retry();

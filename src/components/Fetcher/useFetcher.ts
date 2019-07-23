@@ -8,25 +8,26 @@ export interface FetcherError {
 }
 
 export interface FetcherOptions {
-  errorMessage: string;
-  minDelay: number;
-  loadingColor: string;
-  buttonComponent: (props: { doRetry: () => void }) => JSX.Element;
-  loaderComponent: (props: { color: string }) => JSX.Element;
-  errorComponent: (props: { options: FetcherOptions }) => JSX.Element;
-  wrapperClassCSS: string;
-  loadingClassCSS: string;
-  errorClassCSS: string;
-  wrapperStyles: React.CSSProperties;
-  loadingStyles: React.CSSProperties;
-  errorStyles: React.CSSProperties;
-  progress: {
-    show: boolean;
-    color: string;
-    errorColor: string;
-    position: 'top' | 'bottom';
-    styles: React.CSSProperties;
+  errorMessage?: string;
+  minDelay?: number;
+  loadingColor?: string;
+  buttonComponent?: (props: { doRetry: () => void }) => JSX.Element;
+  loaderComponent?: (props: { color: string }) => JSX.Element;
+  errorComponent?: (props: { options: FetcherOptions }) => JSX.Element;
+  wrapperClassCSS?: string;
+  loadingClassCSS?: string;
+  errorClassCSS?: string;
+  wrapperStyles?: React.CSSProperties;
+  loadingStyles?: React.CSSProperties;
+  errorStyles?: React.CSSProperties;
+  progress?: {
+    show?: boolean;
+    color?: string;
+    errorColor?: string;
+    position?: 'top' | 'bottom';
+    styles?: React.CSSProperties;
   } & ProgressOptions;
+  adjustBorderRadius?: boolean;
 }
 
 export type FetcherEvent =
@@ -48,9 +49,9 @@ export class FetcherAPI {
     onResult: (data: any) => void;
   };
   listeners: { [key: string]: Function[] };
-  options: Partial<FetcherOptions>;
+  options: FetcherOptions;
 
-  constructor(options?: Partial<FetcherOptions>) {
+  constructor(options?: FetcherOptions) {
     this.listeners = {};
     this.options = {
       errorMessage: 'An error occured',
@@ -62,6 +63,7 @@ export class FetcherAPI {
       wrapperClassCSS: 'fetcher-wrapper',
       loadingClassCSS: 'fetcher-loading',
       errorClassCSS: 'fetcher-error',
+      adjustBorderRadius: true,
       ...options,
       progress: {
         show: false,
@@ -210,7 +212,7 @@ export class FetcherAPI {
   }
 }
 
-export function useFetcher(options?: Partial<FetcherOptions>) {
+export function useFetcher(options?: FetcherOptions) {
   const api = new FetcherAPI(options);
   return api;
 }

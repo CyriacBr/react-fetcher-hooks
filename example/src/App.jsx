@@ -4,6 +4,7 @@ import MinimalExample from './components/MinimalExample';
 import MinimalErrorExample from './components/MinimalErrorExample';
 import MinimalOptionsExample from './components/MinimalOptionsExample';
 import MinimalProgressExample from './components/MinimalProgressExample';
+import LocationExample from './components/LocationExample';
 
 const App = () => {
   return (
@@ -19,6 +20,8 @@ const App = () => {
       <MinimalOptionsExample />
       <h3>Minimal Progress Example</h3>
       <MinimalProgressExample />
+      <h3>Location Example</h3>
+      <LocationExample />
     </div>
   );
 };
