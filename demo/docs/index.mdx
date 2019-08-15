@@ -1,0 +1,84 @@
+---
+name: Getting Started
+route: /
+---
+
+# Why?
+This goal of this library is to take away the pain of manually handling fetching states (idle, loading, error)
+for every one of your components. Just hand over an `AxiosResponse` object to Fetcher and let it handles the
+visual feedbacks and the what-ifs.  
+It reduces boilerplates but also give you a wide range of customization tools for general usage.
+
+# Installation
+
+## Using yarn
+```bash
+yarn add use-fetcher-react
+```
+
+## Using npm
+```bash
+npm install use-fetcher-react
+```
+
+# Usage
+`use-fetcher-react` exposes a component `Fetcher` that you are supposed to wrap around your content.  
+That components handle automatically fetching and feedbacks rendering.  
+```jsx
+import React from 'react';
+import { Fetcher } from 'use-fetcher-react';
+
+const MyComponent = () => {
+  return (
+    <div>
+      <Fetcher>
+        My content
+      </Fetcher>
+    </div>
+  );
+}
+```
+
+But this won't do much on its own.  
+`use-fetcher-react` also exposes `useFetcher` which returns a `FetcherAPI` object. You can interact with it
+inside your component and any visual feedback will be handled by `Fetcher`, with the condition
+that you pass the API as a prop.  
+```jsx
+import React, { useEffect } from 'react';
+import { useFetcher, Fetcher } from 'use-fetcher-react';
+import axios from 'axios';
+
+const MyComponent = () => {
+  const fetcher = useFetcher();
+  useEffect(() => {
+    let request = () => axios.get('...');
+    fetcher.fetch(request, data => {
+      // Do something with data
+    });
+  }, []);
+
+  return (
+    <div>
+      <Fetcher fetcher={fetcher}>
+        My content
+      </Fetcher>
+    </div>
+  );
+}
+```  
+There's no need for handling errors on this level. If any happens,
+the callback just won't be called and the visual feedback will be handled automatically.
+
+## Minimal Example
+Here's a minimal example of a component's fetching being handled by `Fetcher`.  
+The component **doesn't** have to react to the HTTP response nor does it have to show any loading feeback.  
+All of that is handled by `Fetcher` automatically.  
+
+import BasicExample from '../src/components/BasicExample';
+import BasicExampleSource from '!raw-loader!../src/data/BasicExample.tsx';
+import Preview from '../src/Preview';
+
+<Preview>
+  <BasicExample />
+  <editor>{ BasicExampleSource }</editor>
+</Preview>

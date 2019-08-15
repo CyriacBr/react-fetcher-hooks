@@ -8,10 +8,10 @@
     "bulma": "^0.7.5",
     "prop-types": "^15.6.2",
     "raw-loader": "^3.0.0",
-    "react": "../node_modules/react/",
-    "react-dom": "../node_modules/react-dom/",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "react-scripts-ts": "^2.16.0",
-    "use-fetcher-react": ".."
+    "use-fetcher-react": "^0.0.8"
   },
   "scripts": {
     "start": "react-scripts-ts start",

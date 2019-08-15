@@ -1,0 +1,132 @@
+import React, { useEffect, useState } from 'react';
+import { useFetcher, Fetcher } from 'use-fetcher-react';
+import axios from 'axios';
+
+import 'use-fetcher-react/dist/styles.css';
+import '../index.css';
+
+export interface Todo {
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
+export interface TodoItemProps {
+  todo: Todo;
+  onComplete: (item: Todo) => void;
+  onDelete: (item: Todo) => void;
+}
+
+const TodoItem: React.FC<TodoItemProps> = ({ todo, onComplete, onDelete }) => {
+  return (
+    <div className="todo-item">
+      <div>
+        <span className="icon" onClick={() => onComplete(todo)}
+          style={{ opacity: todo.completed ? 0.25 : 1 }}>
+          <i className="fas fa-check"></i>
+        </span>
+        <span className="icon" onClick={() => onDelete(todo)}>
+          <i className="fas fa-times"></i>
+        </span>
+      </div>
+      <span style={{ textDecoration: todo.completed ? 'line-through' : 'none' }}>{todo.title}</span>
+    </div>
+  );
+};
+
+const TodoApp = () => {
+  const fetcher = useFetcher({
+    buttonComponent: ({ doRetry }) => (
+      <a className="button is-danger" onClick={doRetry}>
+        Retry
+      </a>
+    ),
+    loaderComponent: () => <></>,
+    progress: {
+      show: true,
+      color: '#209cee',
+      tickDelay: { min: 50, max: 150 }
+    }
+  });
+
+  const [items, setItems] = useState<Todo[]>([]);
+  const [title, setTitle] = useState('');
+
+  const load = () => {
+    let request = () => axios.get<Todo[]>('https://crudpi.io/587e1b/todo');
+    fetcher.fetch(request, result => {
+      setItems(result);
+    });
+  }
+  useEffect(() => load(), []);
+
+  const addTodo = () => {
+    if (!title) return;
+    const item: Todo = {
+      id: 0,
+      title,
+      completed: false
+    };
+    let request = () => axios.post('https://crudpi.io/587e1b/todo', item);
+    fetcher.fetch(request, _ => {
+      setItems([...items, item]);
+    });
+  };
+
+  const toggleItemCompleted = (item: Todo) => {
+    let request = () => axios.put('https://crudpi.io/587e1b/todo/' + item.id, {
+      ...item,
+      completed: !item.completed
+    });
+    fetcher.fetch(request, _ => {
+      item.completed = !item.completed;
+      setItems([...items]);
+    });
+  };
+
+  const deleteItem = (item: Todo) => {
+    let request = () => axios.delete('https://crudpi.io/587e1b/todo/' + item.id);
+    fetcher.fetch(request, _ => {
+      setItems(items.filter(i => i !== item));
+    });
+  };
+
+  const renderInput = () => (
+    <div className="field has-addons">
+      <div className="control">
+        <input className="input" type="text" placeholder="My todo item"
+          value={title} onChange={(e) => setTitle(e.target.value)} />
+      </div>
+      <div className="control">
+        <a className="button is-primary" onClick={addTodo}>
+          <span className="icon is-small">
+            <i className="fas fa-plus"></i>
+          </span>
+        </a>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="todo-card">
+      <Fetcher fetcher={fetcher}>
+        <div className="t-container">
+          <h5 className="t-title">My Todo List</h5>
+          {renderInput()}
+          <br />
+          {items.map(item => <TodoItem todo={item} onComplete={toggleItemCompleted} onDelete={deleteItem} />)}
+        </div>
+      </Fetcher>
+    </div>
+  );
+}
+
+const TodoExample: React.FC = () => {
+  return (
+    <div className="todo-container">
+      <TodoApp />
+    </div>
+  );
+};
+
+export default TodoExample;

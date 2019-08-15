@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { FetcherAPI, FetcherError } from './useFetcher';
 import { ClipLoader } from 'react-spinners';
 import Progress from '../Progress/Progress';
@@ -8,6 +8,30 @@ export interface FetcherProps {
   fetcher: FetcherAPI;
 }
 
+const adjustParentPosition = (element: HTMLElement) => {
+  if (!element) return;
+  let parent = element.parentElement as HTMLElement;
+  element.style.visibility = 'hidden';
+  if (parent) {
+    parent.style.position = 'relative';
+    element.style.visibility = 'visible';
+  } else {
+    console.warn(
+      `react-use-fetcher cannot set this component's parent element position to 'relative'`
+    );
+  }
+};
+
+const adjustBorderRadius = (element: HTMLElement) => {
+  if (!element) return;
+  let child = element.children[0] as HTMLElement;
+  if (child) {
+    element.style.borderRadius = child.style.borderRadius;
+  } else {
+    console.warn(`react-use-fetcher couldn't adjust the wrapper's border radius`);
+  }
+};
+
 export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
   if (!fetcher) {
     throw new Error('You need to pass a FetcherAPI to the Fetcher component.');
@@ -16,73 +40,71 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<FetcherError>(null);
-  fetcher.useLoading(loading, setLoading);
-  fetcher.useError(error, setError);
 
   const progress = useProgress({
     tickDelay: options.progress.tickDelay,
     valuePerTick: options.progress.valuePerTick
   });
   let [progressColor, setProgressColor] = useState(options.progress.color);
-  fetcher.addListener('fetch-start', () => {
+
+  const onFetchStart = () => {
     setProgressColor(options.progress.color);
     progress.start();
-  });
-  fetcher.addListener('loading-forced-start', () => {
+    setLoading(true);
+  };
+  const onLoadingForcedStart = () => {
     setProgressColor(options.progress.color);
     progress.start();
-  });
-  fetcher.addListener('fetch-end', () => {
+    setLoading(true);
+  };
+  const onAllFetchEnd = () => {
+    if (!fetcher.isBusy()) {
+      progress.done();
+      setLoading(false);
+    }
+  };
+  const onLoadingForcedEnd = () => {
     progress.done();
-  });
-  fetcher.addListener('loading-forced-end', () => {
-    progress.done();
-  });
-  fetcher.addListener('error', () => {
+    setLoading(false);
+  };
+  const onError = () => {
     setProgressColor(options.progress.errorColor);
     progress.done();
-  });
-  fetcher.addListener('error-forced', () => {
+    setError({
+      message: options.errorMessage
+    });
+  };
+  const onErrorForced = (error: FetcherError) => {
     setProgressColor(options.progress.errorColor);
     progress.done();
-  });
+    setError(error);
+  };
+
+  useEffect(() => {
+    fetcher.addListener('fetch-start', onFetchStart);
+    fetcher.addListener('loading-forced-start', onLoadingForcedStart);
+    fetcher.addListener('all-fetch-end', onAllFetchEnd);
+    fetcher.addListener('loading-forced-end', onLoadingForcedEnd);
+    fetcher.addListener('error', onError);
+    fetcher.addListener('error-forced', onErrorForced);
+
+    return () => {
+      fetcher.removeListener('fetch-start', onFetchStart);
+      fetcher.removeListener('loading-forced-start', onLoadingForcedStart);
+      fetcher.removeListener('all-fetch-end', onAllFetchEnd);
+      fetcher.removeListener('loading-forced-end', onLoadingForcedEnd);
+      fetcher.removeListener('error', onError);
+      fetcher.removeListener('error-forced', onErrorForced);
+    };
+  }, [fetcher]);
 
   const containerElement = useRef(null);
   useEffect(() => {
-    adjustParentPosition();
-    adjustBorderRadius();
+    adjustParentPosition(containerElement.current);
+    if (options.adjustBorderRadius) adjustBorderRadius(containerElement.current);
   });
 
-  const adjustParentPosition = () => {
-    let el = containerElement.current as HTMLElement;
-    if (!el) return;
-    let parent = el.parentElement as HTMLElement;
-    el.style.visibility = 'hidden';
-    if (parent) {
-      parent.style.position = 'relative';
-      el.style.visibility = 'visible';
-    } else {
-      console.warn(
-        `react-use-fetcher cannot set this component's parent element position to 'relative'`
-      );
-    }
-  };
-
-  const adjustBorderRadius = () => {
-    if (!options.adjustBorderRadius) return;
-    let el = containerElement.current as HTMLElement;
-    if (!el) return;
-    let child = el.children[0] as HTMLElement;
-    if (child) {
-      el.style.borderRadius = child.style.borderRadius;
-    } else {
-      console.warn(`react-use-fetcher couldn't adjust the wrapper's border radius`);
-    }
-  };
-
-  const onRetry = () => {
-    fetcher.retry();
-  };
+  const onRetry = useCallback(() => fetcher.retry(), [fetcher]);
 
   const renderLoading = () => {
     let Loader = options.loaderComponent;
@@ -109,7 +131,6 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
   const renderError = () => {
     let Button = options.buttonComponent;
     let Error = options.errorComponent;
-    console.log('Error :', Error);
     let { errorStyles, wrapperStyles, errorClassCSS, wrapperClassCSS } = options;
     return (
       <>
@@ -122,7 +143,8 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
           ) : (
             <div className={errorClassCSS} style={errorStyles || {}}>
               <span>{options.errorMessage}</span>
-              {Button ? <Button doRetry={onRetry} /> : <button onClick={onRetry}>Retry</button>}
+              {fetcher.hasFailedTasks() &&
+                (Button ? <Button doRetry={onRetry} /> : <button onClick={onRetry}>Retry</button>)}
             </div>
           )}
         </div>

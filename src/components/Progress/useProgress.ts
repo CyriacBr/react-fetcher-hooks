@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
 export interface ProgressOptions {
   valuePerTick: {
@@ -11,51 +11,78 @@ export interface ProgressOptions {
   };
 }
 
+function waitDelay(value: number) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+    }, value);
+  });
+}
+
 export function useProgress(options: ProgressOptions) {
   const [show, setShow] = useState(true);
   const [started, setStarted] = useState(false);
   const [done, setDone] = useState(false);
   const [value, setValue] = useState(0);
-  let timeoutHolder = useMemo<NodeJS.Timeout>(() => null, []);
 
-  const animateProgress = (inputValue?: number) => {
+  const nextTick = (inputValue?: number) => {
     let maxAllowed = 96;
-    let tickMin = (inputValue || value) + options.valuePerTick.min;
-    let tickMax = (inputValue || value) + options.valuePerTick.max;
-    let newValue = Math.random() * (tickMax - tickMin) + tickMin;
-    if (newValue > maxAllowed) {
-      newValue = maxAllowed;
-    }
-    setValue(newValue);
+    setValue(prevValue => {
+      if (prevValue >= 100) {
+        return 100;
+      }
+      if (!started) {
+        return prevValue;
+      }
+      let tickMin = (inputValue || prevValue) + options.valuePerTick.min;
+      let tickMax = (inputValue || prevValue) + options.valuePerTick.max;
+      let newValue = Math.random() * (tickMax - tickMin) + tickMin;
+      if (done) {
+        return 100;
+      }
+      if (newValue > maxAllowed) {
+        return maxAllowed;
+      }
+      return newValue;
+    });
   };
 
   const animateDone = () => {
-    if (timeoutHolder) clearTimeout(timeoutHolder);
-    setDone(true);
     setValue(100);
-    setStarted(false);
     setTimeout(() => {
-      setDone(false);
-      setShow(false);
+      if (!started) {
+        setDone(false);
+        setShow(false);
+      }
     }, 1000);
   };
 
-  useEffect(() => {
+  const animate = async () => {
     let { max, min } = options.tickDelay;
+    nextTick();
     let delay = Math.random() * (max - min) + min;
-    timeoutHolder = setTimeout(() => {
-      if (started && !done && value !== 100) {
-        animateProgress();
-      }
-    }, delay);
-  }, [value]);
+    await waitDelay(delay);
+    requestAnimationFrame(animate);
+  };
+
+  useEffect(() => {
+    if (done) {
+      animateDone();
+    }
+    requestAnimationFrame(animate)
+  }, [started, done]);
+
   return {
     start: () => {
-      animateProgress(1);
+      setValue(0);
       setStarted(true);
       setShow(true);
+      setDone(false);
     },
-    done: () => animateDone(),
+    done: () => {
+      setStarted(false);
+      setDone(true);
+    },
     value,
     started,
     show

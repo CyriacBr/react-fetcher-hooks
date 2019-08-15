@@ -1,10 +1,9 @@
 import { AxiosResponse, AxiosPromise } from 'axios';
-import { SetStateAction } from 'react';
 import { ProgressOptions } from '../Progress/useProgress';
+import { useMemo } from 'react';
 
 export interface FetcherError {
   message: string;
-  response: AxiosResponse;
 }
 
 export interface FetcherOptions {
@@ -26,30 +25,39 @@ export interface FetcherOptions {
     errorColor?: string;
     position?: 'top' | 'bottom';
     styles?: React.CSSProperties;
-  } & ProgressOptions;
+  } & Partial<ProgressOptions>;
   adjustBorderRadius?: boolean;
 }
 
 export type FetcherEvent =
   | 'fetch-start'
   | 'fetch-end'
+  | 'all-fetch-end'
   | 'error'
   | 'loading-forced-start'
   | 'loading-forced-end'
   | 'error-forced';
 
+export interface Task {
+  type: 'fetch' | 'custom';
+  getPromise: () => AxiosPromise<any> | Promise<any>;
+  onResult: (data: any) => void;
+  status: 'pending' | 'failed';
+}
+
+export interface ManyTask {
+  type: 'fetch' | 'custom';
+  getPromise: () => (AxiosPromise<any> | Promise<any>)[];
+  onResult: (data: any) => void;
+  status: 'pending' | 'failed';
+}
+
 export class FetcherAPI {
   loading: boolean;
-  _setLoading: React.Dispatch<SetStateAction<boolean>>;
-  error: FetcherError;
-  _setError: React.Dispatch<SetStateAction<FetcherError>>;
-  retryStatus: {
-    type: 'fetch' | 'custom';
-    promise: Promise<AxiosResponse<any>> | Promise<any>;
-    onResult: (data: any) => void;
-  };
+  tasks: (Task)[];
   listeners: { [key: string]: Function[] };
   options: FetcherOptions;
+  workingCounter: number;
 
   constructor(options?: FetcherOptions) {
     this.listeners = {};
@@ -70,12 +78,14 @@ export class FetcherAPI {
         position: 'top',
         color: '#36d7b7',
         errorColor: '#cd3f45',
-        tickDelay: { min: 500, max: 1000 },
+        tickDelay: { min: 400, max: 600 },
         valuePerTick: { min: 2, max: 3 },
         styles: null,
-        ...((options && options.progress) || {}),
-      },
+        ...((options && options.progress) || {})
+      }
     };
+    this.workingCounter = 0;
+    this.tasks = [];
   }
 
   addListener(event: FetcherEvent, func: Function) {
@@ -88,20 +98,24 @@ export class FetcherAPI {
     this.listeners[event] = this.listeners[event].filter(f => f !== func);
   }
 
+  isBusy() {
+    return this.workingCounter > 0;
+  }
+
+  hasFailedTasks() {
+    return this.tasks.filter(t => t.status === 'failed').length > 0;
+  }
+
   private callListener(event: FetcherEvent, ...args: any[]) {
     switch (event) {
       case 'fetch-start':
-        this._setLoading(true);
+        this.workingCounter++;
         break;
       case 'fetch-end':
-        this._setLoading(false);
-        break;
-      case 'error':
-        this._setLoading(false);
-        this._setError({
-          response: args[0],
-          message: this.options.errorMessage
-        });
+        this.workingCounter--;
+        if (!this.isBusy()) {
+          this.callListener('all-fetch-end');
+        }
         break;
       default:
         break;
@@ -111,17 +125,55 @@ export class FetcherAPI {
     }
   }
 
-  async fetch<T>(responsePromise: AxiosPromise<T>, onResult: (data: T) => void) {
-    this.retryStatus = {
+  fetch<T>(getResponse: () => AxiosPromise<T>, onResult: (data: T) => void) {
+    let task: Task = {
       type: 'fetch',
-      promise: responsePromise,
-      onResult
+      getPromise: getResponse,
+      onResult,
+      status: 'pending'
     };
+    this.tasks.push(task);
+    this.processTask(task);
+    return this;
+  }
+
+  // async fetchMany<T>(getResponse: () => AxiosPromise<T>[], onResult: (data: T) => void) {
+  //   let task: ManyTask = {
+  //     type: 'fetch',
+  //     getPromise: getResponse,
+  //     onResult,
+  //     status: 'pending'
+  //   };
+  //   this.tasks.push(task);
+  //   //this.processManyTask(task);
+  //   return this;
+  // }
+
+  handle<T>(getPromise: () => Promise<T>, onResult: (result: T) => void) {
+    let task: Task = {
+      type: 'custom',
+      getPromise,
+      onResult,
+      status: 'pending'
+    };
+    this.tasks.push(task);
+    this.processTask(task);
+    return this;
+  }
+
+  async processTask(task: Task) {
+    let { getPromise, onResult, type } = task;
+    task.status = 'pending';
     try {
       await this.callListener('fetch-start');
       let error = null;
       let [response] = await Promise.all([
-        responsePromise.catch(e => {
+        /**
+         * Don't allow Promise.all to throw because we want to 
+         * wait for the delay regardless of if there's an error
+         * or not
+         */
+        getPromise().catch(e => {
           error = e;
           return null;
         }),
@@ -131,47 +183,32 @@ export class FetcherAPI {
       if (error) {
         throw error;
       }
-      let { data } = response;
-      if (data != null) {
-        return onResult(data);
+      switch (type) {
+        case 'custom':
+          this.completeTask(task);
+          return onResult(response);
+        case 'fetch':
+          let { data, status } = response as AxiosResponse;
+          if (String(status)[0] === "2") {
+            this.completeTask(task);
+            if (data != null) {
+              return onResult(data);
+            }
+            return onResult(response);
+          }
+          break;
       }
-      await this.callListener('error', response);
+      throw new Error('Invalid response');
     } catch (error) {
-      console.error('Unexpected error during fetch');
+      console.error('Error caught during fetch');
       console.error(error);
+      task.status = 'failed';
       await this.callListener('error', null);
     }
   }
 
-  async handle<T>(promise: Promise<T>, onResult: (result: T) => void) {
-    this.retryStatus = {
-      type: 'custom',
-      promise,
-      onResult
-    };
-    try {
-      await this.callListener('fetch-start');
-      let error = null;
-      let [result] = await Promise.all([
-        promise.catch(e => {
-          error = e;
-          return null;
-        }),
-        this._waitDelay()
-      ]);
-      await this.callListener('fetch-end', result);
-      if (error) {
-        throw error;
-      }
-      if (result != null) {
-        return onResult(result);
-      }
-      await this.callListener('error', null);
-    } catch (error) {
-      console.error('Unexpected error during handle');
-      console.error(error);
-      await this.callListener('error', null);
-    }
+  completeTask(task: Task) {
+    this.tasks = this.tasks.filter(t => t !== task);
   }
 
   _waitDelay() {
@@ -181,38 +218,22 @@ export class FetcherAPI {
   }
 
   setLoading(value: boolean) {
-    this._setLoading(value);
     this.callListener(value ? 'loading-forced-start' : 'loading-forced-end');
   }
 
   setError(value: FetcherError) {
-    this._setError(value);
-    this.callListener('error-forced');
+    this.callListener('error-forced', value);
   }
 
   retry() {
-    if (this.retryStatus) {
-      let { type } = this.retryStatus;
-      if (type === 'custom') {
-        this.handle(this.retryStatus.promise, this.retryStatus.onResult);
-      } else {
-        this.fetch(this.retryStatus.promise, this.retryStatus.onResult);
-      }
+    let failedTasks = this.tasks.filter(task => task.status === 'failed');
+    for (const task of failedTasks) {
+      this.processTask(task);
     }
-  }
-
-  useLoading(loading: boolean, _setLoading: React.Dispatch<SetStateAction<boolean>>) {
-    this.loading = loading;
-    this._setLoading = _setLoading;
-  }
-
-  useError(error: FetcherError, _setError: React.Dispatch<SetStateAction<FetcherError>>) {
-    this.error = error;
-    this._setError = _setError;
   }
 }
 
 export function useFetcher(options?: FetcherOptions) {
-  const api = new FetcherAPI(options);
+  const api = useMemo(() => new FetcherAPI(options), []);
   return api;
 }

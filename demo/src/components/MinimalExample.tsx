@@ -5,13 +5,13 @@ import axios from 'axios';
 import 'use-fetcher-react/dist/styles.css';
 import '../index.css';
 
-const MinimalExample = () => {
+const MinimalExample: React.FC = () => {
   const fetcher = useFetcher();
   const [title, setTitle] = useState('No todo title');
 
   const load = () => {
     let randomId = Math.round(Math.random() * 100) + 1;
-    let request = axios.get(`https://jsonplaceholder.typicode.com/todos/${randomId}`);
+    let request = () => axios.get(`https://jsonplaceholder.typicode.com/todos/${randomId}`);
     fetcher.fetch(request, data => {
       setTitle(data.title);
     });
