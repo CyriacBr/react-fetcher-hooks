@@ -1,6 +1,7 @@
 export default {
   title: 'Use Fetcher',
   typescript: true,
+  base: '/react-use-fetcher/',
   themeConfig: {
     styles: {
       page: {

@@ -117,7 +117,7 @@ import LocationSource from '!raw-loader!../src/components/LocationExample.tsx'
 ### Loading
 
 #### Manual Set
-When `fetcher.fetch` is called, the component automatically enters in the loading state.  
+When `fetcher.fetch` is called, the component automatically enters the loading state.  
 But you can manually set it:  
 
 import ForcedLoadingExample from '../src/components/ForcedLoadingExample.tsx';
@@ -163,6 +163,7 @@ import ForcedErrorSource from '!raw-loader!../src/components/ForcedErrorExample.
   <ForcedErrorExample />
   <editor>{ ForcedErrorSource }</editor>
 </Preview>  
+
 When an error is encountered while fetching resources, `Fetcher` displays an 
 error message as well as a button to retry the request. All of these can be customized as described bellow.  
 
@@ -174,7 +175,7 @@ import FailButtonSource from '!raw-loader!../src/components/FailButtonExample.ts
 
 <Preview>
   <FailButtonExample />
-  <editor>{ FailButtonExample }</editor>
+  <editor>{ FailButtonSource }</editor>
 </Preview>  
 
 #### Failure With a Progress Bar
@@ -214,8 +215,6 @@ The possible listeners are:
 
 ## Options
 
-When using `useFetch`, an options object can be passed as parameter.  
-
 | Option              | Type                                                 | Description                                                                                                                                                                        | Default Value            |
 | ------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
 | errorMessage        | string                                               | The error message to display when an error is caught.                                                                                                                              | An error occured         |
@@ -240,7 +239,7 @@ frequently ticks happen.  A random value is selected each time between `min` and
 |                     |                                                      |                                                                                                                                                                                    |                          |
 |                     |                                                      |                                                                                                                                                                                    |                          |
 
-### Multiple Requests  
+## Multiple Requests  
 
 Calling `FetcherAPI.fetch` returns the api object itself, thus allowing you to chain Multiple
 fetch calls.
@@ -253,7 +252,7 @@ import MultipleExample1Source from '!raw-loader!../src/components/MultipleExampl
   <editor>{ MultipleExample1Source }</editor>
 </Preview>  
 
-### UseEffect Cleanup
+## UseEffect Cleanup
 To prevent memory leaks when working with `useEffect`, call `FetcherAPI.cancel` 
 inside the cleanup function. This won't cancel pending promises, but this'll stop
 callbacks passed to `fetch` from being called.

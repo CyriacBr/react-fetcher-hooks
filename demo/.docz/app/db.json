@@ -16,6 +16,7 @@
     },
     "separator": "-",
     "typescript": true,
+    "base": "/react-use-fetcher/",
     "htmlContext": {
       "head": {
         "links": [
@@ -27,6 +28,161 @@
       }
     }
   },
+  "entries": [
+    {
+      "key": "docs/_examples.mdx",
+      "value": {
+        "name": "More Examples",
+        "id": "4d6564c35b02d49aed45d60adc3c44b4",
+        "filepath": "docs/_examples.mdx",
+        "link": "",
+        "slug": "docs-examples",
+        "route": "/react-use-fetcher/docs-examples",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "options",
+            "depth": 2,
+            "value": "Options"
+          },
+          {
+            "slug": "todo-app-example",
+            "depth": 2,
+            "value": "Todo App Example"
+          }
+        ]
+      }
+    },
+    {
+      "key": "docs/index.mdx",
+      "value": {
+        "name": "Getting Started",
+        "route": "/react-use-fetcher/",
+        "id": "73498ad0e1e62a714b08085d318f9de1",
+        "filepath": "docs/index.mdx",
+        "link": "",
+        "slug": "docs-index",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "why",
+            "depth": 1,
+            "value": "Why?"
+          },
+          {
+            "slug": "installation",
+            "depth": 1,
+            "value": "Installation"
+          },
+          {
+            "slug": "using-yarn",
+            "depth": 2,
+            "value": "Using yarn"
+          },
+          {
+            "slug": "using-npm",
+            "depth": 2,
+            "value": "Using npm"
+          },
+          {
+            "slug": "usage",
+            "depth": 1,
+            "value": "Usage"
+          },
+          {
+            "slug": "minimal-example",
+            "depth": 2,
+            "value": "Minimal Example"
+          },
+          {
+            "slug": "custom-promise",
+            "depth": 2,
+            "value": "Custom Promise"
+          },
+          {
+            "slug": "feedback-location",
+            "depth": 2,
+            "value": "Feedback Location"
+          },
+          {
+            "slug": "fetching-states",
+            "depth": 2,
+            "value": "Fetching States"
+          },
+          {
+            "slug": "loading",
+            "depth": 3,
+            "value": "Loading"
+          },
+          {
+            "slug": "manual-set",
+            "depth": 4,
+            "value": "Manual Set"
+          },
+          {
+            "slug": "custom-loader",
+            "depth": 4,
+            "value": "Custom Loader"
+          },
+          {
+            "slug": "progress-bar",
+            "depth": 4,
+            "value": "Progress Bar"
+          },
+          {
+            "slug": "error",
+            "depth": 3,
+            "value": "Error"
+          },
+          {
+            "slug": "manual-set-1",
+            "depth": 4,
+            "value": "Manual Set"
+          },
+          {
+            "slug": "custom-retry-button",
+            "depth": 4,
+            "value": "Custom Retry button"
+          },
+          {
+            "slug": "failure-with-a-progress-bar",
+            "depth": 4,
+            "value": "Failure With a Progress Bar"
+          },
+          {
+            "slug": "listeners",
+            "depth": 2,
+            "value": "Listeners"
+          },
+          {
+            "slug": "options",
+            "depth": 2,
+            "value": "Options"
+          },
+          {
+            "slug": "multiple-requests",
+            "depth": 2,
+            "value": "Multiple Requests"
+          },
+          {
+            "slug": "useeffect-cleanup",
+            "depth": 2,
+            "value": "UseEffect Cleanup"
+          },
+          {
+            "slug": "global-options",
+            "depth": 4,
+            "value": "Global Options"
+          },
+          {
+            "slug": "customizing-css",
+            "depth": 2,
+            "value": "Customizing CSS"
+          }
+        ]
+      }
+    }
+  ],
   "props": [
     {
       "key": "src/App.tsx",
@@ -137,161 +293,6 @@
     {
       "key": "src/data/BasicExample.tsx",
       "value": []
-    }
-  ],
-  "entries": [
-    {
-      "key": "docs/_examples.mdx",
-      "value": {
-        "name": "More Examples",
-        "id": "4d6564c35b02d49aed45d60adc3c44b4",
-        "filepath": "docs/_examples.mdx",
-        "link": "",
-        "slug": "docs-examples",
-        "route": "/docs-examples",
-        "menu": "",
-        "headings": [
-          {
-            "slug": "options",
-            "depth": 2,
-            "value": "Options"
-          },
-          {
-            "slug": "todo-app-example",
-            "depth": 2,
-            "value": "Todo App Example"
-          }
-        ]
-      }
-    },
-    {
-      "key": "docs/index.mdx",
-      "value": {
-        "name": "Getting Started",
-        "route": "/",
-        "id": "73498ad0e1e62a714b08085d318f9de1",
-        "filepath": "docs/index.mdx",
-        "link": "",
-        "slug": "docs-index",
-        "menu": "",
-        "headings": [
-          {
-            "slug": "why",
-            "depth": 1,
-            "value": "Why?"
-          },
-          {
-            "slug": "installation",
-            "depth": 1,
-            "value": "Installation"
-          },
-          {
-            "slug": "using-yarn",
-            "depth": 2,
-            "value": "Using yarn"
-          },
-          {
-            "slug": "using-npm",
-            "depth": 2,
-            "value": "Using npm"
-          },
-          {
-            "slug": "usage",
-            "depth": 1,
-            "value": "Usage"
-          },
-          {
-            "slug": "minimal-example",
-            "depth": 2,
-            "value": "Minimal Example"
-          },
-          {
-            "slug": "custom-promise",
-            "depth": 2,
-            "value": "Custom Promise"
-          },
-          {
-            "slug": "feedback-location",
-            "depth": 2,
-            "value": "Feedback Location"
-          },
-          {
-            "slug": "fetching-states",
-            "depth": 2,
-            "value": "Fetching States"
-          },
-          {
-            "slug": "loading",
-            "depth": 3,
-            "value": "Loading"
-          },
-          {
-            "slug": "manual-set",
-            "depth": 4,
-            "value": "Manual Set"
-          },
-          {
-            "slug": "custom-loader",
-            "depth": 4,
-            "value": "Custom Loader"
-          },
-          {
-            "slug": "progress-bar",
-            "depth": 4,
-            "value": "Progress Bar"
-          },
-          {
-            "slug": "error",
-            "depth": 3,
-            "value": "Error"
-          },
-          {
-            "slug": "manual-set-1",
-            "depth": 4,
-            "value": "Manual Set"
-          },
-          {
-            "slug": "custom-retry-button",
-            "depth": 4,
-            "value": "Custom Retry button"
-          },
-          {
-            "slug": "failure-with-a-progress-bar",
-            "depth": 4,
-            "value": "Failure With a Progress Bar"
-          },
-          {
-            "slug": "listeners",
-            "depth": 2,
-            "value": "Listeners"
-          },
-          {
-            "slug": "options",
-            "depth": 2,
-            "value": "Options"
-          },
-          {
-            "slug": "multiple-requests",
-            "depth": 3,
-            "value": "Multiple Requests"
-          },
-          {
-            "slug": "useeffect-cleanup",
-            "depth": 3,
-            "value": "UseEffect Cleanup"
-          },
-          {
-            "slug": "global-options",
-            "depth": 4,
-            "value": "Global Options"
-          },
-          {
-            "slug": "customizing-css",
-            "depth": 2,
-            "value": "Customizing CSS"
-          }
-        ]
-      }
     }
   ]
 }
