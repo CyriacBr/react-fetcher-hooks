@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
 import { useFetcher, Fetcher } from 'use-fetcher-react';
 
-import 'use-fetcher-react/dist/styles.css';
-import '../index.css';
-
 const HandleExample = () => {
   const fetcher = useFetcher();
 

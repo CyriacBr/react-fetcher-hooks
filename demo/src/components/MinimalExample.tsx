@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useFetcher, Fetcher } from 'use-fetcher-react';
 import axios from 'axios';
 
-import 'use-fetcher-react/dist/styles.css';
-import '../index.css';
-
 const MinimalExample: React.FC = () => {
   const fetcher = useFetcher();
   const [title, setTitle] = useState('No todo title');

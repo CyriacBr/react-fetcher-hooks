@@ -3,11 +3,15 @@ name: Getting Started
 route: /
 ---
 
+import 'use-fetcher-react/dist/styles.css';
+import '../src/index.css';
+import Preview from '../src/Preview.tsx';
+
 # Why?
-This goal of this library is to take away the pain of manually handling fetching states (idle, loading, error)
-for every one of your components. Just hand over an `AxiosResponse` object to Fetcher and let it handles the
+The goal of this library is to take away the pain of manually handling fetching states (idle, loading, error)
+for every one of your components. Just hand over an HTTP request to Fetcher and let it handle the
 visual feedbacks and the what-ifs.  
-It reduces boilerplates but also give you a wide range of customization tools for general usage.
+It reduces boilerplate but also give you a wide range of customization tools for general usage.
 
 # Installation
 
@@ -74,11 +78,224 @@ Here's a minimal example of a component's fetching being handled by `Fetcher`.
 The component **doesn't** have to react to the HTTP response nor does it have to show any loading feeback.  
 All of that is handled by `Fetcher` automatically.  
 
-import BasicExample from '../src/components/BasicExample';
-import BasicExampleSource from '!raw-loader!../src/data/BasicExample.tsx';
-import Preview from '../src/Preview';
+import BasicExample from '../src/components/BasicExample.tsx';
+import BasicExampleSource from '!raw-loader!../src/components/BasicExample.tsx';
 
 <Preview>
   <BasicExample />
   <editor>{ BasicExampleSource }</editor>
 </Preview>
+
+## Custom Promise
+`FetcherAPI.fetch` expects an axios promise. You can however let Fetcher handle any type of promise with `FetcherAPI.handle`. 
+
+import HandleExample from '../src/components/HandleExample.tsx';
+import HandleExampleSource from '!raw-loader!../src/components/HandleExample.tsx' 
+
+<Preview>
+  <HandleExample />
+  <editor>{ HandleExampleSource }</editor>
+</Preview>
+
+## Feedback Location
+Depending on the location of the `Fetcher` component, you can position the visual feedback
+area however you want.  
+Note that the component will set the parent's `position` style to `relative` and can also adjust its own border to
+match the one of the parent.
+
+import LocationExample from '../src/components/LocationExample.tsx';
+import LocationSource from '!raw-loader!../src/components/LocationExample.tsx' 
+
+<Preview>
+  <LocationExample />
+  <editor>{ LocationSource }</editor>
+</Preview>
+
+
+## Fetching States
+
+### Loading
+
+#### Manual Set
+When `fetcher.fetch` is called, the component automatically enters in the loading state.  
+But you can manually set it:  
+
+import ForcedLoadingExample from '../src/components/ForcedLoadingExample.tsx';
+import ForcedLoadingSource from '!raw-loader!../src/components/ForcedLoadingExample.tsx';
+
+<Preview>
+  <ForcedLoadingExample />
+  <editor>{ ForcedLoadingSource }</editor>
+</Preview>
+
+#### Custom Loader
+The library relies on `react-spinners` [loader components](https://www.react-spinners.com/) and use `ClipLoader` by default.
+You can however specify a custom loader component.  
+
+import CustomLoaderExample from '../src/components/CustomLoaderExample.tsx';
+import CustomLoaderSource from '!raw-loader!../src/components/CustomLoaderExample.tsx';
+
+<Preview>
+  <CustomLoaderExample />
+  <editor>{ CustomLoaderSource }</editor>
+</Preview>
+
+#### Progress Bar
+UseFetcher comes with a progress bar too.  
+
+import ProgressExample from '../src/components/ProgressExample.tsx';
+import ProgressExampleSource from '!raw-loader!../src/components/ProgressExample.tsx';
+
+<Preview>
+  <ProgressExample />
+  <editor>{ ProgressExampleSource }</editor>
+</Preview>
+
+### Error  
+
+#### Manual Set  
+Likewise, the error state can be enforced manually:  
+
+import ForcedErrorExample from '../src/components/ForcedErrorExample.tsx';
+import ForcedErrorSource from '!raw-loader!../src/components/ForcedErrorExample.tsx';
+
+<Preview>
+  <ForcedErrorExample />
+  <editor>{ ForcedErrorSource }</editor>
+</Preview>  
+When an error is encountered while fetching resources, `Fetcher` displays an 
+error message as well as a button to retry the request. All of these can be customized as described bellow.  
+
+#### Custom Retry button  
+Here's an example with a custom retry button based on Bulma.  
+
+import FailButtonExample from '../src/components/FailButtonExample.tsx';
+import FailButtonSource from '!raw-loader!../src/components/FailButtonExample.tsx';
+
+<Preview>
+  <FailButtonExample />
+  <editor>{ FailButtonExample }</editor>
+</Preview>  
+
+#### Failure With a Progress Bar
+The progress bar also handles failures.  
+
+import ProgressFailureExample from '../src/components/ProgressFailureExample.tsx';
+import ProgressFailureSource from '!raw-loader!../src/components/ProgressFailureExample.tsx';
+
+<Preview>
+  <ProgressFailureExample />
+  <editor>{ ProgressFailureSource }</editor>
+</Preview>  
+
+## Listeners
+For more power, you can add custom listeners to the `FetcherAPI` object. Here's an example
+with a component manually reacting to the fetching states.  
+
+import ListenerExample from '../src/components/ListenerExample.tsx';
+import ListenerExampleSource from '!raw-loader!../src/components/ListenerExample.tsx';
+
+<Preview>
+  <ListenerExample />
+  <editor>{ ListenerExampleSource }</editor>
+</Preview>  
+
+The possible listeners are:  
+
+| Listener             | Description                                                 |
+|----------------------|-------------------------------------------------------------|
+| fetch-start          | When `FetcherAPI.fetch` is called.                          |
+| fetch-end            | Just before the callback from `FetcherAPI.fetch` is called. |
+| all-fetch-end        | When all tasks are completed.                               |
+| loading-forced-start | When `FetcherAPI.setLoading(true)` is called.               |
+| loading-forced-end   | When `FetcherAPI.setLoading(false)` is called.              |
+| error                | When an error is caugh while fetching.                      |
+| error-forced         | When an error is manually set.                              |
+
+## Options
+
+When using `useFetch`, an options object can be passed as parameter.  
+
+| Option              | Type                                                 | Description                                                                                                                                                                        | Default Value            |
+| ------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| errorMessage        | string                                               | The error message to display when an error is caught.                                                                                                                              | An error occured         |
+| minDelay            | number                                               | Minimal time to wait, in ms before collecting the request's response. useful to display proper loading feedback to the user.                                                       | 500                      |
+| loadingColor        | string                                               | The color of the loading spinner.                                                                                                                                                  | #36d7b7                  |
+| buttonComponent     | (props: { doRetry: () => void }) => JSX.Element      | A React component to render a custom button component.                                                                                                                             | null                     |
+| loaderComponent     | (props: { color: string}) => JSX.Element             | A React component to render a custom spinner.                                                                                                                                      | null                     |
+| errorComponent      | (props: { options: FetcherOptions}) => JSX.Element   | A React component to render a custom error visual feedback. Note that if this is used, `buttonComponent` will be ignored.                                                          | null                     |
+| wrapperClassCSS     | string                                               | The `className` value of the `Fetcher` container.                                                                                                                                  | fetcher-wrapper          |
+| loadingClassCSS     | string                                               | The `className` value of the element wrapping the loading spinner.                                                                                                                 | fetcher-loading          |
+| errorClassCSS       | string                                               | The `className` value of the element wrapping the error feedback.                                                                                                                  | fetching-error           |
+| wrapperStyles       | React.CSSProperties                                  | A style object to apply to the wrapper element.                                                                                                                                    | {}                       |
+| loadingStyles       | React.CSSProperties                                  | A style object to apply to the loading element.                                                                                                                                    | {}                       |
+| errorStyles         | React.CSSProperties                                  | A style to apply to the error element.                                                                                                                                             | {}                       |
+| progress.show       | boolean                                              | Display a progress bar while fetching? Default is `false`.                                                                                                                         | false                    |
+| progress.color      | string                                               | The color of the progress bar.                                                                                                                                                     | #36d7b7                  |
+| progress.errorColor | string                                               | The color of the progress bar when an error happens.                                                                                                                               | #cd3f45                  |
+| progress.tickDelay  | { min: number, max: number}                          | In the loading state, the progress bar increases at each tick. This parameter defines how
+frequently ticks happen.  A random value is selected each time between `min` and `max`.  | { min: 500, max: 1000}   |
+| progress.tickValue  | { min: number, max: number}                          | Defines how much the bar grows at each tick.                                                                                                                                       | { min: 2, max: 3}        |
+| progress.styles     | React.CSSProperties                                  | A style object to apply the progress bar element.                                                                                                                                  | {}                       |
+|                     |                                                      |                                                                                                                                                                                    |                          |
+|                     |                                                      |                                                                                                                                                                                    |                          |
+
+### Multiple Requests  
+
+Calling `FetcherAPI.fetch` returns the api object itself, thus allowing you to chain Multiple
+fetch calls.
+
+import MultipleExample1 from '../src/components/MultipleExample1.tsx';
+import MultipleExample1Source from '!raw-loader!../src/components/MultipleExample1.tsx';
+
+<Preview>
+  <MultipleExample1 />
+  <editor>{ MultipleExample1Source }</editor>
+</Preview>  
+
+### UseEffect Cleanup
+To prevent memory leaks when working with `useEffect`, call `FetcherAPI.cancel` 
+inside the cleanup function. This won't cancel pending promises, but this'll stop
+callbacks passed to `fetch` from being called.
+```jsx
+import React, { useEffect } from 'react';
+import { useFetcher, Fetcher } from 'use-fetcher-react';
+import axios from 'axios';
+
+const MyComponent = () => {
+  const fetcher = useFetcher();
+  useEffect(() => {
+    let request = () => axios.get('...');
+    fetcher.fetch(request, data => {
+      // Do something with data
+    });
+    return () => {
+      fetcher.cancel();
+    };
+  }, []);
+
+  return (
+    <div>
+      <Fetcher fetcher={fetcher}>
+        My content
+      </Fetcher>
+    </div>
+  );
+}
+```  
+
+#### Global Options  
+I recommend to define your Fetcher options as ES modules and export them throughout your 
+applications instead of defined them for each of your component that need some customization.  
+```ts
+import { myFetcherOptions } from '@/utils/fetcherOptions';
+
+// In your components
+const fetcher = useFetcher(myFetcherOptions);
+```  
+
+## Customizing CSS
+Modify the following CSS classes:
+* fetcher-wrapper  
+* fetcher-error
+* fetching-loading

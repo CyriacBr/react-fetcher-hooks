@@ -43,6 +43,7 @@ export interface Task {
   getPromise: () => AxiosPromise<any> | Promise<any>;
   onResult: (data: any) => void;
   status: 'pending' | 'failed';
+  canceled: boolean;
 }
 
 export interface ManyTask {
@@ -50,6 +51,7 @@ export interface ManyTask {
   getPromise: () => (AxiosPromise<any> | Promise<any>)[];
   onResult: (data: any) => void;
   status: 'pending' | 'failed';
+  canceled: boolean;
 }
 
 export class FetcherAPI {
@@ -130,7 +132,8 @@ export class FetcherAPI {
       type: 'fetch',
       getPromise: getResponse,
       onResult,
-      status: 'pending'
+      status: 'pending',
+      canceled: false
     };
     this.tasks.push(task);
     this.processTask(task);
@@ -154,7 +157,8 @@ export class FetcherAPI {
       type: 'custom',
       getPromise,
       onResult,
-      status: 'pending'
+      status: 'pending',
+      canceled: false
     };
     this.tasks.push(task);
     this.processTask(task);
@@ -180,6 +184,9 @@ export class FetcherAPI {
         this._waitDelay()
       ]);
       await this.callListener('fetch-end', response);
+      if (task.canceled) {
+        return;
+      }
       if (error) {
         throw error;
       }
@@ -209,6 +216,12 @@ export class FetcherAPI {
 
   completeTask(task: Task) {
     this.tasks = this.tasks.filter(t => t !== task);
+  }
+
+  cancel() {
+    for (const task of this.tasks) {
+      task.canceled = true;
+    }
   }
 
   _waitDelay() {

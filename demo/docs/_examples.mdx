@@ -1,0 +1,28 @@
+---
+name: More Examples
+---
+
+import 'use-fetcher-react/dist/styles.css';
+import '../src/index.css';
+import Preview from '../src/Preview.tsx';
+
+## Options
+
+import OptionsExample from '../src/components/OptionsExample';
+import OptionsExampleSource from '!raw-loader!../src/components/OptionsExample.tsx';
+
+<Preview>
+  <OptionsExample />
+  <editor>{ OptionsExampleSource }</editor>
+</Preview>
+
+
+## Todo App Example
+
+import TodoExample from '../src/components/TodoExample';
+import TodoExampleSource from '!raw-loader!../src/components/TodoExample.tsx';
+
+<Preview>
+  <TodoExample />
+  <editor>{ TodoExampleSource }</editor>
+</Preview>

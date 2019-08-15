@@ -1,9 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useFetcher, Fetcher } from 'use-fetcher-react';
+import { useFetcher, Fetcher, FetcherOptions } from 'use-fetcher-react';
 import axios from 'axios';
 
-import 'use-fetcher-react/dist/styles.css';
-import '../index.css';
+const fetcherOptions: FetcherOptions = {
+  buttonComponent: ({ doRetry }) => (
+    <a className="button is-danger" onClick={doRetry}>
+      Retry
+    </a>
+  ),
+  loaderComponent: () => <></>,
+  progress: {
+    show: true,
+    color: '#209cee',
+    tickDelay: { min: 50, max: 150 }
+  }
+};
 
 export interface Todo {
   id: number;
@@ -35,19 +46,7 @@ const TodoItem: React.FC<TodoItemProps> = ({ todo, onComplete, onDelete }) => {
 };
 
 const TodoApp = () => {
-  const fetcher = useFetcher({
-    buttonComponent: ({ doRetry }) => (
-      <a className="button is-danger" onClick={doRetry}>
-        Retry
-      </a>
-    ),
-    loaderComponent: () => <></>,
-    progress: {
-      show: true,
-      color: '#209cee',
-      tickDelay: { min: 50, max: 150 }
-    }
-  });
+  const fetcher = useFetcher(fetcherOptions);
 
   const [items, setItems] = useState<Todo[]>([]);
   const [title, setTitle] = useState('');
@@ -63,13 +62,13 @@ const TodoApp = () => {
   const addTodo = () => {
     if (!title) return;
     const item: Todo = {
-      id: 0,
+      id: null as any,
       title,
       completed: false
     };
-    let request = () => axios.post('https://crudpi.io/587e1b/todo', item);
-    fetcher.fetch(request, _ => {
-      setItems([...items, item]);
+    let request = () => axios.post<Todo[]>('https://crudpi.io/587e1b/todo', item);
+    fetcher.fetch(request, todos => {
+      setItems([...todos]);
     });
   };
 
@@ -114,7 +113,7 @@ const TodoApp = () => {
           <h5 className="t-title">My Todo List</h5>
           {renderInput()}
           <br />
-          {items.map(item => <TodoItem todo={item} onComplete={toggleItemCompleted} onDelete={deleteItem} />)}
+          {items.map(item => <TodoItem key={item.id} todo={item} onComplete={toggleItemCompleted} onDelete={deleteItem} />)}
         </div>
       </Fetcher>
     </div>

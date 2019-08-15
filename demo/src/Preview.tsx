@@ -12,25 +12,23 @@ const Preview: React.FC<PreviewProps> = ({ children, tabNames }) => {
 
   return (
     <div className="preview-container">
-      <div>
-        {childrenArray[0]}
-      </div>
       <div className="tabs">
         <ul>
-          {
-            childrenArray.map((node, i) => {
-              if (i === 0) return null;
-              return (
-                <li className={tab === i ? "is-active" : ""}><a onClick={() => setTab(i)}>
-                  {(tabNames || ['Code'])[i - 1]}
-                </a></li>
-              )
-            })
-          }
+        {
+          childrenArray.map((node, i) => 
+            (
+              <li key={i} className={tab === i ? "is-active" : ""}>
+                <a onClick={() => setTab(i)}>
+                  {(tabNames || ['Result','Code'])[i]}
+                </a>
+              </li>
+            )
+          )
+        }
         </ul>
       </div>
       <div className="tab-content">
-        {React.Children.toArray(children)[tab + 1]}
+        {childrenArray[tab]}
       </div>
     </div>
   );

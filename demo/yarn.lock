@@ -2871,6 +2871,11 @@ builtin-status-codes@^3.0.0:
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
 
+bulma@^0.7.5:
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.7.5.tgz#35066c37f82c088b68f94450be758fc00a967208"
+  integrity sha512-cX98TIn0I6sKba/DhW0FBjtaDpxTelU166pf7ICXpCCuplHWyu6C9LYZmL5PEsnePIeJaiorsTEzzNk3Tsm1hw==
+
 bytes@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
@@ -12581,10 +12586,10 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
-use-fetcher-react@latest:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/use-fetcher-react/-/use-fetcher-react-0.0.8.tgz#7c3c47c43a283281eec8a7b44071936470f9a5b2"
-  integrity sha512-cPtTpO0A0GzZJ217Zc9G2wrJZGP9bjzCg3V6wd/g7s1jmAmKUNsvDHqij9jIPGFl5qASpZJ0dvmGH2P6shA9fA==
+use-fetcher-react@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/use-fetcher-react/-/use-fetcher-react-0.0.9.tgz#48e459c5318221af0e36249d8bed7b68d8ee7edc"
+  integrity sha512-mxsz+1PiAKKYMPnywodcgdWfA3FtPAzcB3jQHqZJ9oszVshkWztYZ51YqPs1HQfzXcv2aGa4jrYCU8DL1Ifqzw==
   dependencies:
     axios "^0.19.0"
     react-spinners "^0.5.4"

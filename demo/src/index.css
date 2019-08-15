@@ -63,14 +63,14 @@ code {
   display: flex;
   flex-direction: column;
   align-self: flex-start;
-  align-items: flex-start;
+  align-items: center;
   flex: 1;
   padding: 2em;
   margin: 2em;
   margin-top: 0;
   margin-right: 0;
   box-shadow: 0 8px 12px rgba(60, 90, 120, 0.1);
-  background: #ced4de;
+  background: #fafafa;
   overflow: auto;
   border-radius: 0.5em;
 }
@@ -149,4 +149,27 @@ code {
 
 input:active {
   corder-color: #8898aa;
+}
+
+.preview-container {
+}
+
+div[class*="Page__Wrapper"] {
+  background: #f2f2f2;
+}
+
+div[class*="Sidebar__Wrapper"] {
+  box-shadow: 0 8px 12px rgba(60, 90, 120, 0.1);
+  background: #fafafa;
+}
+
+code[class*="InlineCode"] {
+  background: #7a7a7a;
+  color: white;
+  font-size: 1em;
+}
+
+div[class*="Editor__Wrapper"] {
+  box-shadow: 0 8px 12px rgba(60, 90, 120, 0.1);
+  background: #fafafa;
 }

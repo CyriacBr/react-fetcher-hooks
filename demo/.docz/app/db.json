@@ -1,17 +1,169 @@
 {
   "config": {
-    "title": "Use Fetcher React Docs",
+    "title": "Use Fetcher",
     "description": "My awesome app using docz",
     "menu": [],
-    "version": "0.0.0",
+    "version": "0.1.0",
     "repository": null,
     "native": false,
     "codeSandbox": true,
-    "themeConfig": {},
-    "separator": "-"
+    "themeConfig": {
+      "styles": {
+        "page": {
+          "background": "#f2f2f2"
+        }
+      }
+    },
+    "separator": "-",
+    "typescript": true,
+    "htmlContext": {
+      "head": {
+        "links": [
+          {
+            "rel": "stylesheet",
+            "href": "https://use.fontawesome.com/releases/v5.0.7/css/all.css"
+          }
+        ]
+      }
+    }
   },
-  "props": [],
+  "props": [
+    {
+      "key": "src/App.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "App",
+          "methods": [],
+          "props": {}
+        }
+      ]
+    },
+    {
+      "key": "src/Preview.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Preview",
+          "methods": [],
+          "props": {
+            "tabNames": {
+              "defaultValue": null,
+              "description": "",
+              "name": "tabNames",
+              "required": false,
+              "type": {
+                "name": "string[] | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/components/BasicExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/CustomLoaderExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/DashboardExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/FailButtonExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/FailExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/ForcedErrorExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/ForcedLoadingExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/HandleExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/ListenerExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/LocationExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/MinimalExample.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "MinimalExample",
+          "methods": [],
+          "props": {}
+        }
+      ]
+    },
+    {
+      "key": "src/components/MultipleExample1.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/ProgressExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/ProgressFailureExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/TodoExample.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "TodoExample",
+          "methods": [],
+          "props": {}
+        }
+      ]
+    },
+    {
+      "key": "src/data/BasicExample.tsx",
+      "value": []
+    }
+  ],
   "entries": [
+    {
+      "key": "docs/_examples.mdx",
+      "value": {
+        "name": "More Examples",
+        "id": "4d6564c35b02d49aed45d60adc3c44b4",
+        "filepath": "docs/_examples.mdx",
+        "link": "",
+        "slug": "docs-examples",
+        "route": "/docs-examples",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "options",
+            "depth": 2,
+            "value": "Options"
+          },
+          {
+            "slug": "todo-app-example",
+            "depth": 2,
+            "value": "Todo App Example"
+          }
+        ]
+      }
+    },
     {
       "key": "docs/index.mdx",
       "value": {
@@ -59,6 +211,11 @@
             "value": "Custom Promise"
           },
           {
+            "slug": "feedback-location",
+            "depth": 2,
+            "value": "Feedback Location"
+          },
+          {
             "slug": "fetching-states",
             "depth": 2,
             "value": "Fetching States"
@@ -69,9 +226,44 @@
             "value": "Loading"
           },
           {
+            "slug": "manual-set",
+            "depth": 4,
+            "value": "Manual Set"
+          },
+          {
+            "slug": "custom-loader",
+            "depth": 4,
+            "value": "Custom Loader"
+          },
+          {
+            "slug": "progress-bar",
+            "depth": 4,
+            "value": "Progress Bar"
+          },
+          {
             "slug": "error",
             "depth": 3,
             "value": "Error"
+          },
+          {
+            "slug": "manual-set-1",
+            "depth": 4,
+            "value": "Manual Set"
+          },
+          {
+            "slug": "custom-retry-button",
+            "depth": 4,
+            "value": "Custom Retry button"
+          },
+          {
+            "slug": "failure-with-a-progress-bar",
+            "depth": 4,
+            "value": "Failure With a Progress Bar"
+          },
+          {
+            "slug": "listeners",
+            "depth": 2,
+            "value": "Listeners"
           },
           {
             "slug": "options",
@@ -79,19 +271,14 @@
             "value": "Options"
           },
           {
-            "slug": "example",
+            "slug": "multiple-requests",
             "depth": 3,
-            "value": "Example"
+            "value": "Multiple Requests"
           },
           {
-            "slug": "custom-button-error-message-and-loading-color",
-            "depth": 4,
-            "value": "Custom button, error message and loading color"
-          },
-          {
-            "slug": "progress-bar",
-            "depth": 4,
-            "value": "Progress bar"
+            "slug": "useeffect-cleanup",
+            "depth": 3,
+            "value": "UseEffect Cleanup"
           },
           {
             "slug": "global-options",
@@ -102,11 +289,6 @@
             "slug": "customizing-css",
             "depth": 2,
             "value": "Customizing CSS"
-          },
-          {
-            "slug": "dashboard-example",
-            "depth": 2,
-            "value": "Dashboard Example"
           }
         ]
       }
