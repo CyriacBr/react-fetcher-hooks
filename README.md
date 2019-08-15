@@ -4,6 +4,7 @@
 
 [![NPM](https://img.shields.io/npm/v/use-fetcher-react.svg)](https://www.npmjs.com/package/use-fetcher-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+![](useFetcher.gif)
 
 # Why?
 The goal of this library is to take away the pain of manually handling fetching states (idle, loading, error)
