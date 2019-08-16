@@ -11,12 +11,10 @@ const MultipleExample1 = () => {
     let request = () => axios.get('https://api.chucknorris.io/jokes/random');
     fetcher
     .fetch(request, data => {
-      console.log('data1 :', data);
       const json = JSON.stringify(data, null, 2);
       setJsons(prev => [json, ...prev]);
     })
     .fetch(request, data => {
-      console.log('data2 :', data);
       const json = JSON.stringify(data, null, 2);
       setJsons(prev => [json, ...prev]);
     });

@@ -8,16 +8,12 @@
     "@types/react": "16.9.1",
     "@types/react-dom": "16.8.5",
     "bulma": "^0.7.5",
-    "raw-loader": "^3.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1",
     "typescript": "3.5.3",
-    "use-fetcher-react": "^0.0.9"
-  },
-  "devDependencies": {
-    "docz": "1.2.0",
-    "docz-theme-default": "1.2.0"
+    "raw-loader": "^3.0.0",
+    "use-fetcher-react": "0.0.92"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -19,6 +19,8 @@ export interface FetcherOptions {
   wrapperStyles?: React.CSSProperties;
   loadingStyles?: React.CSSProperties;
   errorStyles?: React.CSSProperties;
+  wrapperBackgroundColor?: string;
+  dimBackground?: boolean;
   progress?: {
     show?: boolean;
     color?: string;
@@ -27,6 +29,12 @@ export interface FetcherOptions {
     styles?: React.CSSProperties;
   } & Partial<ProgressOptions>;
   adjustBorderRadius?: boolean;
+  placeholder?: {
+    show?: boolean;
+    classTarget?: string;
+    wrapperClassCSS?: string;
+    wrapperStyles?: React.CSSProperties;
+  };
 }
 
 export type FetcherEvent =
@@ -74,6 +82,8 @@ export class FetcherAPI {
       loadingClassCSS: 'fetcher-loading',
       errorClassCSS: 'fetcher-error',
       adjustBorderRadius: true,
+      wrapperBackgroundColor: '#ffffff80',
+      dimBackground: true,
       ...options,
       progress: {
         show: false,
@@ -84,6 +94,12 @@ export class FetcherAPI {
         valuePerTick: { min: 2, max: 3 },
         styles: null,
         ...((options && options.progress) || {})
+      },
+      placeholder: {
+        show: false,
+        classTarget: '--p',
+        wrapperClassCSS: 'placeholder-wrapper',
+        ...((options && options.placeholder) || {})
       }
     };
     this.workingCounter = 0;

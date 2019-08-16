@@ -3,6 +3,7 @@ import { FetcherAPI, FetcherError } from './useFetcher';
 import { ClipLoader } from 'react-spinners';
 import Progress from '../Progress/Progress';
 import { useProgress } from '../Progress/useProgress';
+import { Placeholder } from '../Placeholder/Placeholder';
 
 export interface FetcherProps {
   fetcher: FetcherAPI;
@@ -108,10 +109,21 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
 
   const renderLoading = () => {
     let Loader = options.loaderComponent;
-    let { loadingStyles, wrapperStyles, loadingClassCSS, wrapperClassCSS } = options;
+    let {
+      loadingStyles,
+      wrapperStyles,
+      loadingClassCSS,
+      wrapperClassCSS,
+      dimBackground,
+      wrapperBackgroundColor
+    } = options;
+    wrapperStyles = {
+      ...(wrapperStyles || {}),
+      background: dimBackground ? wrapperBackgroundColor : '#ffffff00'
+    };
     return (
       <>
-        <div className={wrapperClassCSS} ref={containerElement} style={wrapperStyles || {}}>
+        <div className={wrapperClassCSS} ref={containerElement} style={wrapperStyles}>
           {options.progress.show && progress.show && (
             <Progress value={progress.value} color={progressColor} />
           )}
@@ -123,7 +135,7 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
             )}
           </div>
         </div>
-        {children}
+        <Placeholder children={children} classTarget={options.placeholder.classTarget} />
       </>
     );
   };
@@ -131,10 +143,21 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
   const renderError = () => {
     let Button = options.buttonComponent;
     let Error = options.errorComponent;
-    let { errorStyles, wrapperStyles, errorClassCSS, wrapperClassCSS } = options;
+    let {
+      wrapperStyles,
+      wrapperClassCSS,
+      dimBackground,
+      wrapperBackgroundColor,
+      errorClassCSS,
+      errorStyles
+    } = options;
+    wrapperStyles = {
+      ...(wrapperStyles || {}),
+      background: dimBackground ? wrapperBackgroundColor : '#ffffff00'
+    };
     return (
       <>
-        <div className={wrapperClassCSS} ref={containerElement} style={wrapperStyles || {}}>
+        <div className={wrapperClassCSS} ref={containerElement} style={wrapperStyles}>
           {options.progress.show && progress.show && (
             <Progress value={progress.value} color={progressColor} />
           )}

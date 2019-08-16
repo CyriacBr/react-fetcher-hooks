@@ -25,6 +25,7 @@ export default {
       sourcemap: true
     }
   ],
+  external: ['react','react-dom'],
   plugins: [
     external(),
     postcss({
@@ -38,24 +39,24 @@ export default {
       clean: true
     }),
     commonjs({
-      include: 'node_modules/**',
+      include: ['node_modules/**', '../../node_modules/**'],
       // left-hand side can be an absolute path, a path
       // relative to the current directory, or the name
       // of a module in node_modules
       namedExports: {
-        'node_modules/react/index.js': [
+        '../../node_modules/react/index.js': [
           'cloneElement',
           'createContext',
           'Component',
           'createElement'
         ],
-        'node_modules/react-dom/index.js': ['render', 'hydrate'],
-        'node_modules/react-is/index.js': [
+        '../../node_modules/react-dom/index.js': ['render', 'hydrate'],
+        '../../node_modules/react-is/index.js': [
           'isElement',
           'isValidElementType',
           'ForwardRef'
         ],
-        'node_modules/react-spinners/index.js': ['BarLoader', 'ClipLoader']
+        '../../node_modules/react-spinners/index.js': ['BarLoader', 'ClipLoader']
       }
     })
   ]
