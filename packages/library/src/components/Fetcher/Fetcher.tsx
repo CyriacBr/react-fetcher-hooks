@@ -115,7 +115,8 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
       loadingClassCSS,
       wrapperClassCSS,
       dimBackground,
-      wrapperBackgroundColor
+      wrapperBackgroundColor,
+      hideLoader
     } = options;
     wrapperStyles = {
       ...(wrapperStyles || {}),
@@ -128,14 +129,14 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
             <Progress value={progress.value} color={progressColor} />
           )}
           <div className={loadingClassCSS} style={loadingStyles || {}}>
-            {Loader ? (
+            {!hideLoader && (Loader ? (
               <Loader color={options.loadingColor} />
             ) : (
               <ClipLoader color={options.loadingColor} />
-            )}
+            ))}
           </div>
         </div>
-        <Placeholder children={children} classTarget={options.placeholder.classTarget} />
+        <Placeholder children={children} options={options.placeholder} />
       </>
     );
   };

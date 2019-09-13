@@ -3,6 +3,8 @@ import { useFetcher, Fetcher } from 'use-fetcher-react';
 
 const PlaceholderExample = () => {
   const fetcher = useFetcher({
+    dimBackground: false,
+    hideLoader: true,
     placeholder: {
       show: true
     }
@@ -14,9 +16,9 @@ const PlaceholderExample = () => {
   return (
     <div className="test-container">
       <Fetcher fetcher={fetcher}>
-        <span className="-p">Placeholder Example</span>
+        <span className="--p">Placeholder Example</span>
         <br/>
-        <span className="-p">
+        <span className="--p">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum accumsan
           lorem, id tristique erat. Ut elementum dui lobortis ex eleifend eleifend. Curabitur
           scelerisque odio ac tellus volutpat, nec tempor justo tristique. Vivamus tincidunt sem nec

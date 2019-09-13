@@ -1,6 +1,7 @@
 import { AxiosResponse, AxiosPromise } from 'axios';
 import { ProgressOptions } from '../Progress/useProgress';
 import { useMemo } from 'react';
+import { PlaceholderOptions } from '../Placeholder/Placeholder';
 
 export interface FetcherError {
   message: string;
@@ -21,6 +22,7 @@ export interface FetcherOptions {
   errorStyles?: React.CSSProperties;
   wrapperBackgroundColor?: string;
   dimBackground?: boolean;
+  hideLoader?: boolean;
   progress?: {
     show?: boolean;
     color?: string;
@@ -31,10 +33,7 @@ export interface FetcherOptions {
   adjustBorderRadius?: boolean;
   placeholder?: {
     show?: boolean;
-    classTarget?: string;
-    wrapperClassCSS?: string;
-    wrapperStyles?: React.CSSProperties;
-  };
+  } & Partial<PlaceholderOptions>;
 }
 
 export type FetcherEvent =
@@ -52,6 +51,7 @@ export interface Task {
   onResult: (data: any) => void;
   status: 'pending' | 'failed';
   canceled: boolean;
+  isMultiple: false;
 }
 
 export interface ManyTask {
@@ -60,11 +60,12 @@ export interface ManyTask {
   onResult: (data: any) => void;
   status: 'pending' | 'failed';
   canceled: boolean;
+  isMultiple: true;
 }
 
 export class FetcherAPI {
   loading: boolean;
-  tasks: (Task)[];
+  tasks: (Task | ManyTask)[];
   listeners: { [key: string]: Function[] };
   options: FetcherOptions;
   workingCounter: number;
@@ -84,6 +85,7 @@ export class FetcherAPI {
       adjustBorderRadius: true,
       wrapperBackgroundColor: '#ffffff80',
       dimBackground: true,
+      hideLoader: false,
       ...options,
       progress: {
         show: false,
@@ -99,6 +101,10 @@ export class FetcherAPI {
         show: false,
         classTarget: '--p',
         wrapperClassCSS: 'placeholder-wrapper',
+        color: '#eee',
+        highlightColor: '#f5f5f5',
+        divide: false,
+        truncateLastLine: false,
         ...((options && options.placeholder) || {})
       }
     };
@@ -149,24 +155,27 @@ export class FetcherAPI {
       getPromise: getResponse,
       onResult,
       status: 'pending',
-      canceled: false
+      canceled: false,
+      isMultiple: false
     };
     this.tasks.push(task);
     this.processTask(task);
     return this;
   }
 
-  // async fetchMany<T>(getResponse: () => AxiosPromise<T>[], onResult: (data: T) => void) {
-  //   let task: ManyTask = {
-  //     type: 'fetch',
-  //     getPromise: getResponse,
-  //     onResult,
-  //     status: 'pending'
-  //   };
-  //   this.tasks.push(task);
-  //   //this.processManyTask(task);
-  //   return this;
-  // }
+  async fetchMany<T>(getResponse: () => AxiosPromise<T>[], onResult: (data: T) => void) {
+    let task: ManyTask = {
+      type: 'fetch',
+      getPromise: getResponse,
+      onResult,
+      status: 'pending',
+      canceled: false,
+      isMultiple: true
+    };
+    this.tasks.push(task);
+    this.processManyTask(task);
+    return this;
+  }
 
   handle<T>(getPromise: () => Promise<T>, onResult: (result: T) => void) {
     let task: Task = {
@@ -174,7 +183,8 @@ export class FetcherAPI {
       getPromise,
       onResult,
       status: 'pending',
-      canceled: false
+      canceled: false,
+      isMultiple: false
     };
     this.tasks.push(task);
     this.processTask(task);
@@ -187,9 +197,9 @@ export class FetcherAPI {
     try {
       await this.callListener('fetch-start');
       let error = null;
-      let [response] = await Promise.all([
+      let [response]: [AxiosResponse, any] = await Promise.all([
         /**
-         * Don't allow Promise.all to throw because we want to 
+         * Don't allow Promise.all to throw because we want to
          * wait for the delay regardless of if there's an error
          * or not
          */
@@ -211,8 +221,8 @@ export class FetcherAPI {
           this.completeTask(task);
           return onResult(response);
         case 'fetch':
-          let { data, status } = response as AxiosResponse;
-          if (String(status)[0] === "2") {
+          let { data, status } = response;
+          if (String(status)[0] === '2') {
             this.completeTask(task);
             if (data != null) {
               return onResult(data);
@@ -230,7 +240,62 @@ export class FetcherAPI {
     }
   }
 
-  completeTask(task: Task) {
+  async processManyTask(task: ManyTask) {
+    let { getPromise, onResult, type } = task;
+    task.status = 'pending';
+    try {
+      await this.callListener('fetch-start');
+      let error = null;
+      let [response]: [AxiosResponse[], any] = await Promise.all([
+        /**
+         * Don't allow Promise.all to throw because we want to
+         * wait for the delay regardless of if there's an error
+         * or not
+         */
+        Promise.all(getPromise()).catch(e => {
+          error = e;
+          return null;
+        }),
+        this._waitDelay()
+      ]);
+      await this.callListener('fetch-end', response);
+      if (task.canceled) {
+        return;
+      }
+      if (error) {
+        throw error;
+      }
+      switch (type) {
+        case 'custom':
+          this.completeTask(task);
+          return onResult(response);
+        case 'fetch':
+          let dataArr = [];
+          let hasError = false;
+          for (const res of response) {
+            let { data, status } = res;
+            if (String(status)[0] !== '2') {
+              hasError = true;
+              break;
+            }
+            dataArr.push(data);
+          }
+          if (!hasError) {
+            this.completeTask(task);
+            return onResult(dataArr);
+          }
+          break;
+      }
+      throw new Error('Invalid response');
+    } catch (error) {
+      console.error('Error caught during fetch');
+      console.error(error);
+      task.status = 'failed';
+      await this.callListener('error', null);
+    }
+  }
+
+  completeTask(task: Task | ManyTask) {
     this.tasks = this.tasks.filter(t => t !== task);
   }
 
@@ -257,7 +322,11 @@ export class FetcherAPI {
   retry() {
     let failedTasks = this.tasks.filter(task => task.status === 'failed');
     for (const task of failedTasks) {
-      this.processTask(task);
+      if (task.isMultiple) {
+        this.processManyTask(task);
+      } else {
+        this.processTask(task as Task);
+      }
     }
   }
 }
