@@ -13,7 +13,7 @@ export interface FetcherOptions {
   loadingColor?: string;
   buttonComponent?: (props: { doRetry: () => void }) => JSX.Element;
   loaderComponent?: (props: { color: string }) => JSX.Element;
-  errorComponent?: (props: { options: FetcherOptions }) => JSX.Element;
+  errorComponent?: (props: { options: FetcherOptions, doRetry: () => void }) => JSX.Element;
   wrapperClassCSS?: string;
   loadingClassCSS?: string;
   errorClassCSS?: string;

@@ -163,7 +163,7 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
             <Progress value={progress.value} color={progressColor} />
           )}
           {Error ? (
-            <Error options={options} />
+            <Error options={options} doRetry={onRetry} />
           ) : (
             <div className={errorClassCSS} style={errorStyles || {}}>
               <span>{options.errorMessage}</span>
