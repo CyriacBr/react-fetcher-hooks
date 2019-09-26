@@ -52,6 +52,7 @@ export const Fetcher: React.FC<FetcherProps> = ({ fetcher, children }) => {
     setProgressColor(options.progress.color);
     progress.start();
     setLoading(true);
+    setError(null);
   };
   const onLoadingForcedStart = () => {
     setProgressColor(options.progress.color);
