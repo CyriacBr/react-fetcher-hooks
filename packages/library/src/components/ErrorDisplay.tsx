@@ -1,6 +1,8 @@
 import React from 'react';
 import { FetcherOptions } from './Fetcher';
 import { FetcherRef } from '../fetcherRef';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 
 export interface ErrorDisplayProps {
   error: boolean;
@@ -29,12 +31,20 @@ const ErrorDisplay: React.FC<ErrorDisplayProps> = ({ options, error, refs }) => 
     error && (
       <>
         {Error ? (
-          <Error options={options} doRetry={onRetry} />
+          <Error options={options} doRetry={onRetry} showButton={hasFailedTasks()} />
         ) : (
           <div className={errorClassCSS} style={errorStyles || {}}>
-            <span className="message">{options.errorMessage}</span>
-            {hasFailedTasks() &&
-              (Button ? <Button doRetry={onRetry} /> : <button onClick={onRetry}>Retry</button>)}
+            <div className='error-message'>
+              <span>{options.errorMessage}</span>
+              {hasFailedTasks() &&
+                (Button ? (
+                  <Button doRetry={onRetry} />
+                ) : (
+                  <div className='error-button' onClick={onRetry}>
+                    <FontAwesomeIcon icon={faRedoAlt} />
+                  </div>
+                ))}
+            </div>
           </div>
         )}
       </>

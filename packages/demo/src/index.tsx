@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'bulma/css/bulma.css';
 import './index.css';
-import 'use-fetcher-react/dist/styles.css';
+import 'react-fetcher-hooks/dist/styles.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 

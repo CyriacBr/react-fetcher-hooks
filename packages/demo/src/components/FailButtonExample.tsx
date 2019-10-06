@@ -1,26 +1,24 @@
 import React, { useEffect } from 'react';
-import { useFetcher, Fetcher } from 'react-fetcher-hooks';
+import { useFetcher, Fetcher, FetcherOptions } from 'react-fetcher-hooks';
 import axios from 'axios';
 
-const ProgressFailureExample = () => {
-  const fetcher = useFetcher({
-    progress: {
-      show: true
-    },
-    minDelay: 2000
-  });
+const options: FetcherOptions = {
+  buttonComponent: ({ doRetry }) => (
+    <a className='button is-danger' onClick={doRetry}>
+      Retry
+    </a>
+  )
+};
 
-  const loadData = () => {
-    let request = () => axios.get('https://impossible.path/api');
-    fetcher.fetch(request, data => {});
-  };
+const FailButtonExample = () => {
+  const ref = useFetcher();
   useEffect(() => {
-    loadData();
+    ref.fetch(() => axios.get('https://impossible.path/api'), _ => {});
   }, []);
 
   return (
-    <div className="test-container">
-      <Fetcher fetcher={fetcher}>
+    <div className='test-container'>
+      <Fetcher refs={[ref]} options={options}>
         <span>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum accumsan
           lorem, id tristique erat. Ut elementum dui lobortis ex eleifend eleifend. Curabitur
@@ -36,4 +34,4 @@ const ProgressFailureExample = () => {
   );
 };
 
-export default ProgressFailureExample;
+export default FailButtonExample;

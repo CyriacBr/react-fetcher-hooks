@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useFetcher, Fetcher } from 'use-fetcher-react';
+import { useFetcher, Fetcher } from 'react-fetcher-hooks';
 import axios from 'axios';
 
 const LocationExample = () => {

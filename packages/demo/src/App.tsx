@@ -1,14 +1,14 @@
 import React from 'react';
-import BasicExample from './components/v1/BasicExample';
-import ManualUsageExample from './components/v1/ManualUsageExample';
-import CRUDExample from './components/v1/CRUDExample';
-import CRUDExample2 from './components/v1/CRUDExample2';
-import CustomLoaderExample from './components/v1/CustomLoaderExample';
-import FailExample from './components/v1/FailExample';
-import FailButtonExample from './components/v1/FailButtonExample';
-import ProgressExample from './components/v1/ProgressExample';
-import PlaceholderExample from './components/v1/PlaceholderExample';
-import PlaceholderExample2 from './components/v1/PlaceholderExample2';
+import BasicExample from './components/BasicExample';
+import ManualUsageExample from './components/ManualUsageExample';
+import CRUDExample from './components/CRUDExample';
+import CRUDExample2 from './components/CRUDExample2';
+import CustomLoaderExample from './components/CustomLoaderExample';
+import FailExample from './components/FailExample';
+import FailButtonExample from './components/FailButtonExample';
+import ProgressExample from './components/ProgressExample';
+import PlaceholderExample from './components/PlaceholderExample';
+import PlaceholderExample2 from './components/PlaceholderExample2';
 
 const App: React.FC = () => {
   return (

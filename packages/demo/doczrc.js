@@ -1,7 +1,7 @@
 export default {
-  title: 'Use Fetcher',
+  title: 'Fetcher Hookds',
   typescript: true,
-  base: '/react-use-fetcher/',
+  base: '/react-fetcher-hooks/',
   themeConfig: {
     styles: {
       page: {

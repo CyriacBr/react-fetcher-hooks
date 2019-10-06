@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useFetcher, Fetcher } from 'use-fetcher-react';
+import { useFetcher, Fetcher } from 'react-fetcher-hooks';
 import axios from 'axios';
 
-import 'use-fetcher-react/dist/styles.css';
+import 'react-fetcher-hooks/dist/styles.css';
 import '../index.css';
 
 const ThreadsCountCard = () => {

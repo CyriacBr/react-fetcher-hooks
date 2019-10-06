@@ -19,13 +19,27 @@
   align-items: center;
 }
 
-.fetcher-error > .message {
+.fetcher-error > .error-message {
+  display: flex;
+  align-items: center;
   font-weight: bold;
   margin-bottom: 0.5em;
   background: #ffffffc4;
   padding: 0.5em;
   box-shadow: 0 8px 12px rgba(60, 90, 120, 0.1);
   border-radius: 0.5em;
+}
+
+.error-message > .error-button {
+  color: #ff3860;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin-left: 0.5em;
+  transition: all 1s ease;
+}
+
+.error-message > .error-button:hover {
+  transform: rotate(90deg);
 }
 
 .progress-wrapper {

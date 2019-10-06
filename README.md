@@ -1,8 +1,8 @@
-# use-fetcher-react
+# react-fetcher-hooks
 
 > 
 
-[![NPM](https://img.shields.io/npm/v/use-fetcher-react.svg)](https://www.npmjs.com/package/use-fetcher-react) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-fetcher-hooks.svg)](https://www.npmjs.com/package/react-fetcher-hooks) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ![](useFetcher.gif)
 
@@ -16,22 +16,22 @@ It reduces boilerplate but also give you a wide range of customization tools for
 
 ## Using yarn
 ```bash
-yarn add use-fetcher-react
+yarn add react-fetcher-hooks
 ```
 
 ## Using npm
 ```bash
-npm install use-fetcher-react
+npm install react-fetcher-hooks
 ```
 
 # Usage
 
-`use-fetcher-react` exposes `useFetcher` and a component that automatically handle the visual feedback
+`react-fetcher-hooks` exposes `useFetcher` and a component that automatically handle the visual feedback
 when fetching data. For now, the library accepts an `AxiosPromise` primarily but you can handle any
 other type of promise. This is further explained in the docs.
 ```jsx
 import React, { useEffect } from 'react';
-import { useFetcher, Fetcher } from 'use-fetcher-react';
+import { useFetcher, Fetcher } from 'react-fetcher-hooks';
 import axios from 'axios';
 
 const MyComponent = () => {
