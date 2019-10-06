@@ -1,24 +1,26 @@
 import React, { useEffect } from 'react';
-import { useFetcher, Fetcher } from 'use-fetcher-react';
+import { useFetcher, Fetcher, FetcherOptions } from 'use-fetcher-react';
+
+const options: FetcherOptions = {
+  dimBackground: false,
+  hideLoader: true,
+  placeholder: {
+    show: true
+  }
+};
 
 const PlaceholderExample = () => {
-  const fetcher = useFetcher({
-    dimBackground: false,
-    hideLoader: true,
-    placeholder: {
-      show: true
-    }
-  });
+  const ref = useFetcher();
   useEffect(() => {
-    fetcher.setLoading(true);
+    ref.setLoading(true);
   }, []);
 
   return (
-    <div className="test-container">
-      <Fetcher fetcher={fetcher}>
-        <span className="--p">Placeholder Example</span>
-        <br/>
-        <span className="--p">
+    <div className='test-container'>
+      <Fetcher refs={[ref]} options={options}>
+        <span className='--p'>Placeholder Example</span>
+        <br />
+        <span className='--p'>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum accumsan
           lorem, id tristique erat. Ut elementum dui lobortis ex eleifend eleifend. Curabitur
           scelerisque odio ac tellus volutpat, nec tempor justo tristique. Vivamus tincidunt sem nec

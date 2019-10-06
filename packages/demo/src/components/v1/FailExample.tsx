@@ -3,19 +3,14 @@ import { useFetcher, Fetcher } from 'use-fetcher-react';
 import axios from 'axios';
 
 const FailExample = () => {
-  const fetcher = useFetcher();
-
-  const loadData = () => {
-    let request = () => axios.get('https://impossible.path/api');
-    fetcher.fetch(request, data => {});
-  };
+  const ref = useFetcher();
   useEffect(() => {
-    loadData();
+    ref.fetch(() => axios.get('https://impossible.path/api'), _ => {});
   }, []);
 
   return (
-    <div className="test-container">
-      <Fetcher fetcher={fetcher}>
+    <div className='test-container'>
+      <Fetcher refs={[ref]}>
         <span>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum accumsan
           lorem, id tristique erat. Ut elementum dui lobortis ex eleifend eleifend. Curabitur

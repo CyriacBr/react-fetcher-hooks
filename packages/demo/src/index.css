@@ -32,7 +32,7 @@ pre {
   max-width: 700px;
   display: inline-block;
   border-radius: 4px;
-  white-space: pre-wrap; 
+  white-space: pre-wrap;
   word-break: break-word;
 }
 
@@ -87,6 +87,11 @@ code {
   margin-top: 1em;
 }
 
+.my-footer > * {
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+}
+
 .todo-container {
   background: #f2f2f2;
   display: flex;
@@ -104,7 +109,7 @@ code {
   margin-top: 0;
   margin-right: 0;
   box-shadow: 0 8px 12px rgba(60, 90, 120, 0.1);
-  background: rgb(251,252,253);
+  background: rgb(251, 252, 253);
   overflow: auto;
   border-radius: 0.5em;
 }
@@ -154,22 +159,50 @@ input:active {
 .preview-container {
 }
 
-div[class*="Page__Wrapper"] {
+div[class*='Page__Wrapper'] {
   background: #f2f2f2;
 }
 
-div[class*="Sidebar__Wrapper"] {
+div[class*='Sidebar__Wrapper'] {
   box-shadow: 0 8px 12px rgba(60, 90, 120, 0.1);
   background: #fafafa;
 }
 
-code[class*="InlineCode"] {
+code[class*='InlineCode'] {
   background: #7a7a7a;
   color: white;
   font-size: 1em;
 }
 
-div[class*="Editor__Wrapper"] {
+div[class*='Editor__Wrapper'] {
   box-shadow: 0 8px 12px rgba(60, 90, 120, 0.1);
   background: #fafafa;
+}
+
+.crud-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.crud-item > *:first-child {
+  margin-right: 0.5em;
+}
+
+.picsum {
+  width: 400px;
+  height: 300px;
+}
+
+.picsum > img {
+  border-radius: 7px;
+}
+
+.picsum-name {
+  margin-top: 0.5em;
+  font-weight: bold;
+}
+
+.picsum-author {
+  opacity: 0.7;
 }

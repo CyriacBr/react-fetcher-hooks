@@ -1,27 +1,19 @@
 import React, { useEffect } from 'react';
 import { useFetcher, Fetcher } from 'use-fetcher-react';
-import axios from 'axios';
+import { BeatLoader } from 'react-spinners';
 
-const FailButtonExample = () => {
-  const fetcher = useFetcher({
-    buttonComponent: ({ doRetry }) => (
-      <a className="button is-danger" onClick={doRetry}>
-        Retry
-      </a>
-    )
-  });
-
-  const loadData = () => {
-    let request = () => axios.get('https://impossible.path/api');
-    fetcher.fetch(request, data => {});
-  };
-  useEffect(() => {
-    loadData();
-  }, []);
+const CustomLoaderExample = () => {
+  const ref = useFetcher();
+  useEffect(() => ref.setLoading(true), []);
 
   return (
-    <div className="test-container">
-      <Fetcher fetcher={fetcher}>
+    <div className='test-container'>
+      <Fetcher
+        refs={[ref]}
+        options={{
+          loaderComponent: ({ color }) => <BeatLoader color={color} />
+        }}
+      >
         <span>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum accumsan
           lorem, id tristique erat. Ut elementum dui lobortis ex eleifend eleifend. Curabitur
@@ -37,4 +29,4 @@ const FailButtonExample = () => {
   );
 };
 
-export default FailButtonExample;
+export default CustomLoaderExample;
