@@ -162,6 +162,64 @@
             "slug": "error-with-retry",
             "depth": 5,
             "value": "Error with retry"
+          },
+          {
+            "slug": "installation",
+            "depth": 1,
+            "value": "Installation"
+          }
+        ]
+      }
+    },
+    {
+      "key": "docs/usage/fetcher-reference.mdx",
+      "value": {
+        "name": "Fetcher Reference",
+        "route": "/react-fetcher-hooks/usage/fetcher-reference",
+        "menu": "Usage",
+        "id": "fa9b1782beedc45d889e124e94efcc0b",
+        "filepath": "docs/usage/fetcher-reference.mdx",
+        "link": "",
+        "slug": "docs-usage-fetcher-reference",
+        "headings": [
+          {
+            "slug": "fetcher-reference",
+            "depth": 1,
+            "value": "Fetcher Reference"
+          },
+          {
+            "slug": "example",
+            "depth": 2,
+            "value": "Example"
+          },
+          {
+            "slug": "api",
+            "depth": 2,
+            "value": "API"
+          }
+        ]
+      }
+    },
+    {
+      "key": "docs/usage/fetcher.mdx",
+      "value": {
+        "name": "Fetcher",
+        "route": "/react-fetcher-hooks/usage/fetcher",
+        "menu": "Usage",
+        "id": "6f9800504a8c54a4bdabb6cb9424ff73",
+        "filepath": "docs/usage/fetcher.mdx",
+        "link": "",
+        "slug": "docs-usage-fetcher",
+        "headings": [
+          {
+            "slug": "the-fetcher-component",
+            "depth": 1,
+            "value": "The Fetcher Component"
+          },
+          {
+            "slug": "options",
+            "depth": 2,
+            "value": "Options"
           }
         ]
       }

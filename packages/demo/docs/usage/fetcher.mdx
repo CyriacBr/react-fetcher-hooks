@@ -1,0 +1,53 @@
+---
+name: Fetcher
+route: /usage/fetcher
+menu: Usage
+---
+
+import 'bulma/css/bulma.css';
+import '../../src/index.css';
+import 'react-fetcher-hooks/dist/styles.css';
+
+# The Fetcher Component
+
+The role of `Fetcher` is to render the visual feedback of the fetcher references it is tied to.
+Note that `Fetcher` is a react **fragment** and will NOT mess up with your markup. 
+For this reason, you need to **always** wrap it with a DOM element you are ok with it being inlined
+with `position: relative`. It is done automatically.
+```tsx
+<div>
+  <Fetcher refs={refs}>
+    My Content
+  </Fetcher>
+</div>
+```
+
+Also note that `Fetcher`'s children, your content, will NOT re-render when the visual feedback change.
+
+## Options
+
+The component can take an `options` prop to customize its behavior as well as the visual feedbacks.
+
+| Option              | Type                                                 | Description                                                                                                                                                                        | Default Value            |
+| ------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| errorMessage        | string                                               | The error message to display when an error is caught.                                                                                                                              | An error occured         |
+| minDelay            | number                                               | Minimal time to wait, in ms before collecting the request's response. useful to display proper loading feedback to the user.                                                       | 500                      |
+| loadingColor        | string                                               | The color of the loading spinner.                                                                                                                                                  | #36d7b7                  |
+| buttonComponent     | (props: { doRetry: () => void }) => JSX.Element      | A React component to render a custom button component.                                                                                                                             | null                     |
+| loaderComponent     | (props: { color: string}) => JSX.Element             | A React component to render a custom spinner.                                                                                                                                      | null                     |
+| errorComponent      | (props: { options: FetcherOptions}) => JSX.Element   | A React component to render a custom error visual feedback. Note that if this is used, `buttonComponent` will be ignored.                                                          | null                     |
+| wrapperClassCSS     | string                                               | The `className` value of the `Fetcher` container.                                                                                                                                  | fetcher-wrapper          |
+| loadingClassCSS     | string                                               | The `className` value of the element wrapping the loading spinner.                                                                                                                 | fetcher-loading          |
+| errorClassCSS       | string                                               | The `className` value of the element wrapping the error feedback.                                                                                                                  | fetching-error           |
+| wrapperStyles       | React.CSSProperties                                  | A style object to apply to the wrapper element.                                                                                                                                    | {}                       |
+| loadingStyles       | React.CSSProperties                                  | A style object to apply to the loading element.                                                                                                                                    | {}                       |
+| errorStyles         | React.CSSProperties                                  | A style to apply to the error element.                                                                                                                                             | {}                       |
+| progress.show       | boolean                                              | Display a progress bar while fetching? Default is `false`.                                                                                                                         | false                    |
+| progress.color      | string                                               | The color of the progress bar.                                                                                                                                                     | #36d7b7                  |
+| progress.errorColor | string                                               | The color of the progress bar when an error happens.                                                                                                                               | #cd3f45                  |
+| progress.tickDelay  | { min: number, max: number}                          | In the loading state, the progress bar increases at each tick. This parameter defines how
+frequently ticks happen.  A random value is selected each time between `min` and `max`.  | { min: 500, max: 1000}   |
+| progress.tickValue  | { min: number, max: number}                          | Defines how much the bar grows at each tick.                                                                                                                                       | { min: 2, max: 3}        |
+| progress.styles     | React.CSSProperties                                  | A style object to apply the progress bar element.                                                                                                                                  | {}                       |
+|                     |                                                      |                                                                                                                                                                                    |                          |
+|                     |                                                      |                                                                                                                                                                                    |                          |

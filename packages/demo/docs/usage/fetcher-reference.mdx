@@ -1,0 +1,32 @@
+---
+name: Fetcher Reference
+route: /usage/fetcher-reference
+menu: Usage
+---
+
+import 'bulma/css/bulma.css';
+import '../../src/index.css';
+import 'react-fetcher-hooks/dist/styles.css';
+
+# Fetcher Reference
+
+The `Fetcher` component reacts to the behavior of the references it is tied to.
+A reference is basically an API that let you send HTTP (but not only) requests with a simplified syntax.
+You can create a reference using one of the hooks the library provides.
+
+## Example
+
+Here's an example on how to fetch from a REST GET endpoint with `useAxiosRequest`:
+```ts
+const [ref, get, items] = useAxiosRequest('http://myapi.com', true);
+// 'items' is the result of the axios request
+// 'get' can be called at later date to re-fetch
+
+//...
+<Fetcher refs={ref}>
+  My Content
+</Fetcher>
+```
+However, note that you are free to use the hooks without a `Fetcher` tied to it.
+
+## API

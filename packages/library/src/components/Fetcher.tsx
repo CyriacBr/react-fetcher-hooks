@@ -11,6 +11,8 @@ export interface FetcherProps {
 }
 
 export interface FetcherOptions {
+  handleLoading?: boolean;
+  handleError?: boolean;
   errorMessage?: string;
   minDelay?: number;
   loadingColor?: string;
@@ -60,6 +62,8 @@ export interface PlaceholderOptions {
 
 function makeFullOptions(options: FetcherOptions): FetcherOptions {
   return {
+    handleError: true,
+    handleLoading: true,
     errorMessage: 'An error occured',
     minDelay: 500,
     loadingColor: '#36d7b7',
