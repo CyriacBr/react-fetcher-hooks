@@ -1,10 +1,10 @@
 {
-  "name": "use-fetcher-react",
-  "version": "0.0.941",
+  "name": "react-fetcher-hooks",
+  "version": "1.0.0",
   "description": "",
   "author": "CyriacBr",
   "license": "MIT",
-  "repository": "CyriacBr/react-use-fetcher",
+  "repository": "CyriacBr/react-fetcher-hooks",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
@@ -47,7 +47,7 @@
     "rollup-plugin-postcss": "^1.6.2",
     "rollup-plugin-typescript2": "^0.17.0",
     "rollup-plugin-url": "^1.4.0",
-    "typescript": "^2.8.3"
+    "typescript": "^3.6.3"
   },
   "files": [
     "dist"

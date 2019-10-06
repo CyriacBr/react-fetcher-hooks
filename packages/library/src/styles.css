@@ -19,7 +19,7 @@
   align-items: center;
 }
 
-.fetcher-error > span {
+.fetcher-error > .message {
   font-weight: bold;
   margin-bottom: 0.5em;
   background: #ffffffc4;
@@ -38,8 +38,9 @@
 
 .progress-wrapper .bar {
   z-index: 1031;
-  width: 100%;
+  width: 0%;
   height: 2px;
+  position: relative;
   transition: all 200ms ease 0s;
 }
 
@@ -61,6 +62,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: 9000;
 }
 
 @keyframes placeholder-anim {

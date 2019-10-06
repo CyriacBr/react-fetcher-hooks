@@ -1,15 +1,7 @@
-import { useState, useEffect } from 'react';
-
-export interface ProgressOptions {
-  valuePerTick: {
-    min: number;
-    max: number;
-  };
-  tickDelay: {
-    min: number;
-    max: number;
-  };
-}
+import { useState, useEffect, useRef, useMemo } from 'react';
+import Progress from '../components/Progress';
+import React from 'react';
+import { ProgressOptions } from '../components/Fetcher';
 
 function waitDelay(value: number) {
   return new Promise(resolve => {
@@ -24,6 +16,7 @@ export function useProgress(options: ProgressOptions) {
   const [started, setStarted] = useState(false);
   const [done, setDone] = useState(false);
   const [value, setValue] = useState(0);
+  const ref = useRef<HTMLDivElement>();
 
   const nextTick = (inputValue?: number) => {
     let maxAllowed = 96;
@@ -54,7 +47,7 @@ export function useProgress(options: ProgressOptions) {
         setDone(false);
         setShow(false);
       }
-    }, 1000);
+    }, 500);
   };
 
   const animate = async () => {
@@ -69,8 +62,16 @@ export function useProgress(options: ProgressOptions) {
     if (done) {
       animateDone();
     }
-    requestAnimationFrame(animate)
+    requestAnimationFrame(animate);
   }, [started, done]);
+
+  useEffect(() => {
+    let el = ref.current;
+    if (el) {
+      //el.style.transform = `translate3d(-${100 - value}%, 0px, 0px)`;
+      el.style.width = `${value}%`;
+    }
+  }, [value]);
 
   return {
     start: () => {
@@ -85,6 +86,7 @@ export function useProgress(options: ProgressOptions) {
     },
     value,
     started,
-    show
+    show,
+    ref
   };
 }
