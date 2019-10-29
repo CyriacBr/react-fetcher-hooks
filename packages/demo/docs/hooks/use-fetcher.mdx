@@ -1,0 +1,144 @@
+---
+name: UseFetcher
+route: /hooks/use-fetcher
+menu: Hooks
+---
+
+import 'bulma/css/bulma.css';
+import '../../src/index.css';
+import 'react-fetcher-hooks/dist/styles.css';
+import Preview from '../../src/Preview.tsx';
+
+# UseFetcher
+
+It is the most flexible hook but the most verbose. It serves as a building block for all
+the other hooks.
+
+## Usage
+
+### useFetcher
+Create a simple fetcher reference.
+```ts
+const ref = useFetcher();
+```
+
+### fetch
+`FetcherRef.fetch(request: () => AxiosPromise, onResult: data => void)`  
+Perform a request.
+
+<Preview tabNames={['JavaScript', 'TypeScript']}>
+  <editor>
+{
+`ref.fetch(() => axios.get('users'), data => {
+  // do something with data
+});
+`}
+  </editor>
+  <editor>
+{
+`ref.fetch(() => axios.get<User[]>('users'), data => {
+  // do something with data
+  // data is of type User[]
+});
+`}
+  </editor>
+</Preview>
+
+### fetchMany
+`FetcherRef.fetch(request: () => AxiosPromise[], onResult: data => void)`  
+Perform multiple axios requests at once.
+
+<Preview tabNames={['JavaScript', 'TypeScript']}>
+  <editor>
+{
+`ref.fetch(() => [axios.get('users'), axios.get('cats')], data => {
+  // do something with data
+});
+`}
+  </editor>
+  <editor>
+{
+`ref.fetch(() => [axios.get<User[]>('users'), axios.get<Cat[]>('cats')], data => {
+  // do something with data
+  // data is of type [User[], Cat[]]
+});
+`}
+  </editor>
+</Preview>
+
+### handle
+`FetcherRef.handle(request: () => Promise, onResult: data => void)`  
+Handle anything, as long as it returns a `Promise`.
+
+```ts
+const doSomething = () => {
+  return new Promise((resolve, reject) => {
+    // Wait 3s
+    setTimeout(() => {
+      resolve('foo');
+    }, 3000);
+  });
+};
+```
+
+<Preview tabNames={['JavaScript', 'TypeScript']}>
+  <editor>
+{
+`ref.handle(() => doSomething(), data => {
+  // data is 'foo'
+});
+`}
+  </editor>
+  <editor>
+{
+`ref.handle(() => doSomething(), data => {
+  // data is 'foo' and its type is infered
+});
+`}
+  </editor>
+</Preview>
+
+### setLoading
+`FetcherRef.setLoading(value: boolean)`  
+Mnually trigger the loading state.  
+
+```ts
+ref.setLoading(true);
+ref.setLoading(false);
+```
+
+### setError
+`FetcherRef.setLoadingsetError(message: string, allowRetry: boolean)`  
+Manually trigger the error state.  
+
+```ts
+ref.setError('Oops!');
+ref.setError('Something went wrong', true);
+```
+
+### cancel
+`FetcherRef.cancel()`  
+Cancel the ongoing request. What that means is that the `onResult` callback will not be called if the request
+ever returns.
+
+```ts
+ref.cancel();
+```
+
+### retry
+`FetcherRef.retry()`  
+Will try again an ongoing request that has failed.
+
+```ts
+ref.retry();
+```
+
+## Example
+
+import UseFetcherExample from '../../src/components/UseFetcherExample';
+import UseFetcherExampleSource from '!raw-loader!../../src/components/UseFetcherExample.tsx';
+
+<Preview>
+  <UseFetcherExample />
+  <editor>{ UseFetcherExampleSource }</editor>
+</Preview>

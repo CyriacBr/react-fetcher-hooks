@@ -1,0 +1,84 @@
+---
+name: UseRequest
+route: /hooks/use-request
+menu: Hooks
+---
+
+import 'bulma/css/bulma.css';
+import '../../src/index.css';
+import 'react-fetcher-hooks/dist/styles.css';
+import Preview from '../../src/Preview.tsx';
+
+# UseRequest
+
+This is a simpler version of `useFetcher` to avoid a lot of boilerplate.
+
+## Usage
+
+`useRequest(request: (...args: any[]) => AxiosPromise, autoFetch?: boolean)`  
+This hook returns a reference, a function to trigger the request, as well as a getter and setter from `useState`.
+You can use your own axios instance (with configured base path, for example) with `useRequest`.  
+```ts
+const [ref, get, items, setItems] = useRequest(() => axios.get('users'))
+```
+
+When passing true to the second argument, fetching will happen as soon as the component renders,
+so there's no need to manually trigger the request on mount.
+
+## Trigger Function
+
+You can pass parameters to the trigger function. For multiple parameters, use an array.
+
+<Preview tabNames={['JavaScript', 'TypeScript']}>
+  <editor>
+{
+`const [ref, get, item, setItem] = useRequest((id) => axios.get(\`users/\${id}\`));
+const [updateRef, update] = useRequest(([id, data]) => axios.patch(\`users/\${id}\`));
+get(1);
+update([1, { name: 'foo'}]);
+`}
+  </editor>
+  <editor>
+{
+`const [ref, get, item, setItem] = useRequest((id: number) => axios.get<User>(\`users/\${id}\`));
+const [updateRef, update] = useRequest(([id, data]: [number, User]) => axios.patch(\`users/\${id}\`, data));
+get(1); // type is inferred
+update([1, { name: 'foo'}]); // type is inferred
+`}
+  </editor>
+</Preview>
+
+### Callback
+
+It is possible to pass a callback to a trigger function. It'll be called once the request is completed.
+When an error is encountered, it will not be called.
+
+<Preview tabNames={['JavaScript', 'TypeScript']}>
+  <editor>
+{
+`const [ref, get, item, setItem] = useRequest((id) => axios.get(\`users/\${id}\`));
+get(1, result => {
+  // do something
+});
+`}
+  </editor>
+  <editor>
+{
+`const [ref, get, item, setItem] = useRequest((id: number) => axios.get<User>(\`users/\${id}\`));
+get(1, result => {
+  // do something
+  // type of result is 'User'
+});
+`}
+  </editor>
+</Preview>
+
+## Example
+
+import UseRequestExample from '../../src/components/UseRequestExample';
+import UseRequestExampleSource from '!raw-loader!../../src/components/UseRequestExample.tsx';
+
+<Preview>
+  <UseRequestExample />
+  <editor>{ UseRequestExampleSource }</editor>
+</Preview>

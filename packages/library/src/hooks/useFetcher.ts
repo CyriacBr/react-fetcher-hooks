@@ -1,6 +1,13 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { FetcherRef } from '..';
 
 export function useFetcher() {
-  return useMemo(() => new FetcherRef(), []);
+  const ref = useMemo(() => new FetcherRef(), []);
+
+  useEffect(() => {
+    return () => {
+      ref.cancel();
+    }
+  });
+  return ref;
 }

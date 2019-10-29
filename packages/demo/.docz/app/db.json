@@ -1,8 +1,13 @@
 {
   "config": {
-    "title": "Fetcher Hookds",
+    "title": "Fetcher Hooks",
     "description": "My awesome app using docz",
-    "menu": [],
+    "menu": [
+      "Getting Started",
+      "Usage",
+      "States",
+      "Hooks"
+    ],
     "version": "0.1.0",
     "repository": null,
     "native": false,
@@ -94,15 +99,15 @@
       "value": []
     },
     {
+      "key": "src/components/PlaceholderExample.tsx",
+      "value": []
+    },
+    {
       "key": "src/components/PlaceholderExample2.tsx",
       "value": []
     },
     {
       "key": "src/components/ProgressExample.tsx",
-      "value": []
-    },
-    {
-      "key": "src/components/PlaceholderExample.tsx",
       "value": []
     }
   ],
@@ -112,6 +117,7 @@
       "value": {
         "name": "Getting Started",
         "route": "/react-fetcher-hooks/",
+        "order": 1,
         "id": "73498ad0e1e62a714b08085d318f9de1",
         "filepath": "docs/index.mdx",
         "link": "",
@@ -172,6 +178,114 @@
       }
     },
     {
+      "key": "docs/hooks/use-fetcher.mdx",
+      "value": {
+        "name": "UseFetcher",
+        "route": "/react-fetcher-hooks/hooks/use-fetcher",
+        "menu": "Hooks",
+        "id": "22759053ff987de673c57cd9f131941f",
+        "filepath": "docs/hooks/use-fetcher.mdx",
+        "link": "",
+        "slug": "docs-hooks-use-fetcher",
+        "headings": [
+          {
+            "slug": "usefetcher",
+            "depth": 1,
+            "value": "UseFetcher"
+          },
+          {
+            "slug": "usage",
+            "depth": 2,
+            "value": "Usage"
+          },
+          {
+            "slug": "usefetcher-1",
+            "depth": 3,
+            "value": "useFetcher"
+          },
+          {
+            "slug": "fetch",
+            "depth": 3,
+            "value": "fetch"
+          },
+          {
+            "slug": "fetchmany",
+            "depth": 3,
+            "value": "fetchMany"
+          },
+          {
+            "slug": "handle",
+            "depth": 3,
+            "value": "handle"
+          },
+          {
+            "slug": "setloading",
+            "depth": 3,
+            "value": "setLoading"
+          },
+          {
+            "slug": "seterror",
+            "depth": 3,
+            "value": "setError"
+          },
+          {
+            "slug": "cancel",
+            "depth": 3,
+            "value": "cancel"
+          },
+          {
+            "slug": "retry",
+            "depth": 3,
+            "value": "retry"
+          },
+          {
+            "slug": "example",
+            "depth": 2,
+            "value": "Example"
+          }
+        ]
+      }
+    },
+    {
+      "key": "docs/hooks/use-request.mdx",
+      "value": {
+        "name": "UseRequest",
+        "route": "/react-fetcher-hooks/hooks/use-request",
+        "menu": "Hooks",
+        "id": "9fc92a25dd9f9567854339d489ca7ad5",
+        "filepath": "docs/hooks/use-request.mdx",
+        "link": "",
+        "slug": "docs-hooks-use-request",
+        "headings": [
+          {
+            "slug": "userequest",
+            "depth": 1,
+            "value": "UseRequest"
+          },
+          {
+            "slug": "usage",
+            "depth": 2,
+            "value": "Usage"
+          },
+          {
+            "slug": "trigger-function",
+            "depth": 2,
+            "value": "Trigger Function"
+          },
+          {
+            "slug": "callback",
+            "depth": 3,
+            "value": "Callback"
+          },
+          {
+            "slug": "example",
+            "depth": 2,
+            "value": "Example"
+          }
+        ]
+      }
+    },
+    {
       "key": "docs/usage/fetcher-reference.mdx",
       "value": {
         "name": "Fetcher Reference",
@@ -193,9 +307,9 @@
             "value": "Example"
           },
           {
-            "slug": "api",
+            "slug": "composability",
             "depth": 2,
-            "value": "API"
+            "value": "Composability"
           }
         ]
       }
@@ -206,6 +320,7 @@
         "name": "Fetcher",
         "route": "/react-fetcher-hooks/usage/fetcher",
         "menu": "Usage",
+        "order": 2,
         "id": "6f9800504a8c54a4bdabb6cb9424ff73",
         "filepath": "docs/usage/fetcher.mdx",
         "link": "",
@@ -217,9 +332,67 @@
             "value": "The Fetcher Component"
           },
           {
+            "slug": "fallback",
+            "depth": 2,
+            "value": "Fallback"
+          },
+          {
             "slug": "options",
             "depth": 2,
             "value": "Options"
+          }
+        ]
+      }
+    },
+    {
+      "key": "docs/states/error.mdx",
+      "value": {
+        "name": "Error",
+        "route": "/react-fetcher-hooks/states/error",
+        "menu": "States",
+        "id": "8a5f93120a52b73d15773561ef82b475",
+        "filepath": "docs/states/error.mdx",
+        "link": "",
+        "slug": "docs-states-error",
+        "headings": [
+          {
+            "slug": "error",
+            "depth": 1,
+            "value": "Error"
+          }
+        ]
+      }
+    },
+    {
+      "key": "docs/states/loading.mdx",
+      "value": {
+        "name": "Loading",
+        "route": "/react-fetcher-hooks/states/loading",
+        "menu": "States",
+        "id": "5ad307900e842223e68cc25002c2c54f",
+        "filepath": "docs/states/loading.mdx",
+        "link": "",
+        "slug": "docs-states-loading",
+        "headings": [
+          {
+            "slug": "loading",
+            "depth": 1,
+            "value": "Loading"
+          },
+          {
+            "slug": "custom-loader",
+            "depth": 2,
+            "value": "Custom Loader"
+          },
+          {
+            "slug": "progress-bar",
+            "depth": 2,
+            "value": "Progress Bar"
+          },
+          {
+            "slug": "placeholder",
+            "depth": 2,
+            "value": "Placeholder"
           }
         ]
       }

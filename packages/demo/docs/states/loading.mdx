@@ -1,0 +1,80 @@
+---
+name: Loading
+route: /states/loading
+menu: States
+---
+
+import 'bulma/css/bulma.css';
+import '../../src/index.css';
+import 'react-fetcher-hooks/dist/styles.css';
+
+# Loading
+
+When a reference tied to `Fetcher` performs a request, a blocking overlay will render showing a
+customizable loader component:
+
+import LoadingExample from '../../src/components/LoadingExample.tsx';
+
+<LoadingExample />
+
+## Custom Loader
+
+Using options, it is possible to pass a custom loader component:
+
+```tsx
+import { BeatLoader } from 'react-spinners';
+const options = {
+  loaderComponent: ({ color }) => <BeatLoader color={color} />
+};
+```
+
+import CustomLoaderExample from '../../src/components/CustomLoaderExample.tsx';
+
+<CustomLoaderExample />
+
+## Progress Bar
+
+`react-fetcher-hooks` also contains a built-in progress bar. You can toggle it on using `Fetcher` options.
+
+```tsx
+const options = {
+  progress: { show: true }
+};
+```
+
+import ProgressExample from '../../src/components/ProgressExample.tsx';
+
+<ProgressExample />
+
+## Placeholder
+
+By customizing the `placeholder` option, it is possible to show a placeholder overlay while a request is pending.
+
+```tsx
+const options = {
+  placeholder: { show: true }
+};
+```
+import PlaceholderExample from '../../src/components/PlaceholderExample.tsx';
+
+<PlaceholderExample />
+
+There are many ways to come up with a placeholder component, but `react-fetcher-hooks` has a built-in
+functionnality which render placeholder blocks on top of your content based on a specific CSS class.
+By default it is `--p`.
+
+```tsx
+<div className='test-container'>
+  <Fetcher refs={[ref]} options={options}>
+    <span className='--p'>Placeholder Example</span>
+    <br />
+    <span className='--p'>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum accumsan
+      lorem, id tristique erat. Ut elementum dui lobortis ex eleifend eleifend. Curabitur
+      scelerisque odio ac tellus volutpat, nec tempor justo tristique. Vivamus tincidunt sem nec
+      ornare tempor. Maecenas at tellus ac arcu convallis pulvinar. Cras cursus, massa ut varius
+      laoreet, sem dui faucibus nulla, in imperdiet lacus nulla vitae ante.
+    </span>
+  </Fetcher>
+</div>
+```

@@ -9,6 +9,7 @@ import FailButtonExample from './components/FailButtonExample';
 import ProgressExample from './components/ProgressExample';
 import PlaceholderExample from './components/PlaceholderExample';
 import PlaceholderExample2 from './components/PlaceholderExample2';
+import PlaceholderFallbackExample from './components/PlaceholderFallbackExample';
 
 const App: React.FC = () => {
   return (
@@ -34,6 +35,8 @@ const App: React.FC = () => {
       <PlaceholderExample />
       <h3>Placeholder 2</h3>
       <PlaceholderExample2 />
+      <h3>Placeholder Fallback</h3>
+      <PlaceholderFallbackExample />
     </div>
   );
 };

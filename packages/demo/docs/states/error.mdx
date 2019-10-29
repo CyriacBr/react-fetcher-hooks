@@ -1,0 +1,18 @@
+---
+name: Error
+route: /states/error
+menu: States
+---
+
+import 'bulma/css/bulma.css';
+import '../../src/index.css';
+import 'react-fetcher-hooks/dist/styles.css';
+
+# Error
+
+When an ongoing request from a tied `FetcherReference` fails, an overlay component is rendered
+to give a proper feedback to the user.
+
+import FailExample from '../../src/components/FailExample.tsx';
+
+<FailExample />

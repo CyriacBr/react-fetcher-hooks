@@ -78,7 +78,7 @@ export class FetcherRef {
     this.processManyTask(this.task);
   }
 
-  fetchCustom<T, P = any>(request: FetcherCustomRequest<T, P>, onResult: (data: T) => void) {
+  handle<T, P = any>(request: FetcherCustomRequest<T, P>, onResult: (data: T) => void) {
     this.task = {
       type: 'custom',
       getPromise: request,
@@ -90,7 +90,7 @@ export class FetcherRef {
     this.processTask(this.task);
   }
 
-  fetchCustomMany<T extends any[], P = any>(
+  handleMany<T extends any[], P = any>(
     requests: FetcherCustomRequests<T, P>,
     onResult: (data: T) => void
   ) {

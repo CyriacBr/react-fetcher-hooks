@@ -1,5 +1,5 @@
 export default {
-  title: 'Fetcher Hookds',
+  title: 'Fetcher Hooks',
   typescript: true,
   base: '/react-fetcher-hooks/',
   themeConfig: {
@@ -9,6 +9,12 @@ export default {
       }
     }
   },
+  menu: [
+    'Getting Started',
+    'Usage',
+    'States',
+    'Hooks',
+  ],
   modifyBundlerConfig: bundlerConfig => {
     const rules = [
       {

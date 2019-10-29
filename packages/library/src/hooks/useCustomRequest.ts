@@ -11,18 +11,18 @@ export function useCustomRequest<T, P>(request: (arg?: P) => Promise<T>, auto?: 
   function trigger(): void;
   function trigger() {
     if (arguments.length === 0 || typeof arguments[0] !== 'function') {
-      ref.fetchCustom(request, result => setData(result));
+      ref.handle(request, result => setData(result));
       return;
     }
     const arg: any = arguments.length === 1 ? null : arguments[1];
     const onResult: (data: T) => void = arguments.length === 1 ? arguments[0] : arguments[1];
     const handle = arg ? () => request(arg) : request;
-    ref.fetchCustom(handle, onResult);
+    ref.handle(handle, onResult);
   }
 
   useEffect(() => {
     if (auto) {
-      ref.fetchCustom<T, P>(request, result => setData(result));
+      ref.handle<T, P>(request, result => setData(result));
     }
     return () => {
       ref.cancel();

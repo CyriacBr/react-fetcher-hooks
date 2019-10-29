@@ -6,6 +6,9 @@
 
 ![](useFetcher.gif)
 
+**v1 is slighty still in WIP but usable**.  
+`TODO: recalculate placehpmder on resize (w/ debounce)`
+
 # Why?
 The goal of this library is to take away the pain of manually handling fetching states (idle, loading, error)
 for every one of your components. Just hand over an HTTP request to Fetcher and let it handle the

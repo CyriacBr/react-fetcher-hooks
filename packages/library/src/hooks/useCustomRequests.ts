@@ -11,18 +11,18 @@ export function useCustomRequests<T extends any[], P>(request: (arg?: P) => Prom
   function trigger(): void;
   function trigger() {
     if (arguments.length === 0 || typeof arguments[0] !== 'function') {
-      ref.fetchCustomMany(request, result => setData(result));
+      ref.handleMany(request, result => setData(result));
       return;
     }
     const arg: any = arguments.length === 1 ? null : arguments[1];
     const onResult: (data: T) => void = arguments.length === 1 ? arguments[0] : arguments[1];
     const handle = arg ? () => request(arg) : request;
-    ref.fetchCustomMany(handle, onResult);
+    ref.handleMany(handle, onResult);
   }
 
   useEffect(() => {
     if (auto) {
-      ref.fetchCustomMany<T, P>(request, result => setData(result));
+      ref.handleMany<T, P>(request, result => setData(result));
     }
     return () => {
       ref.cancel();

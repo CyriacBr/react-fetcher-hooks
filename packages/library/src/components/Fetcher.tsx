@@ -4,10 +4,12 @@ import { ErrorDisplay } from './ErrorDisplay';
 import { FetcherRef } from '../fetcherRef';
 import { Wrapper } from './Wrapper';
 import { Placeholder } from './Placeholder';
+import { useFetcherStatus } from '..';
 
 export interface FetcherProps {
   refs: FetcherRef[];
   options?: FetcherOptions;
+  Fallback?: React.ComponentType;
 }
 
 export interface FetcherOptions {
@@ -101,8 +103,9 @@ function makeFullOptions(options: FetcherOptions): FetcherOptions {
   };
 }
 
-const Fetcher: React.FC<FetcherProps> = ({ refs, options, children }) => {
+const Fetcher: React.FC<FetcherProps> = ({ refs, options, children, Fallback }) => {
   const _options = useMemo(() => makeFullOptions(options), [options]);
+  const { loading } = useFetcherStatus(refs);
 
   useLayoutEffect(() => {
     for (const ref of refs) {
@@ -110,13 +113,15 @@ const Fetcher: React.FC<FetcherProps> = ({ refs, options, children }) => {
     }
   }, [refs]);
 
+  const Children = (loading && Fallback) ? <Fallback /> : children;
+
   return (
     <>
       <Wrapper refs={refs} options={_options} />
       {_options.placeholder.show ? (
-        <Placeholder children={children} options={_options.placeholder} refs={refs} />
+        <Placeholder children={Children} options={_options.placeholder} refs={refs} />
       ) : (
-        children
+        Children
       )}
     </>
   );
