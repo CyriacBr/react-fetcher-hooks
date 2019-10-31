@@ -14,6 +14,7 @@ import { RefsContext } from "../contexts/refsContext";
 
 export interface PlaceholderProps {
   options: PlaceholderOptions;
+  initialLoading: boolean;
 }
 
 function createBlock(
@@ -113,12 +114,13 @@ function createElements(
 
 export const Placeholder: React.FC<PlaceholderProps> = ({
   children,
-  options
+  options,
+  initialLoading
 }) => {
   const refs = useContext(RefsContext);
   const [elements, setElements] = useState<ReactNode[]>([]);
   const wrapperRef = useRef<HTMLDivElement>();
-  const { loading } = useFetcherStatus(refs);
+  const { loading } = useFetcherStatus(refs, initialLoading);
   const { wrapperClassCSS, wrapperStyles } = options;
 
   useEffect(() => {

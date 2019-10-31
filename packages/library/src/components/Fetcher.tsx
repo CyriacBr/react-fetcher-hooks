@@ -6,6 +6,7 @@ import { Wrapper } from "./Wrapper";
 import { Placeholder } from "./Placeholder";
 import { useFetcherStatus } from "..";
 import { useFetcherCallback } from "../hooks";
+import { RefsContext } from "../contexts/refsContext";
 
 export interface FetcherProps {
   refs: FetcherRef[];
@@ -16,6 +17,7 @@ export interface FetcherProps {
 export interface FetcherOptions {
   handleLoading?: boolean;
   handleError?: boolean;
+  initialLoading?: boolean;
   errorMessage?: string;
   minDelay?: number;
   loadingColor?: string;
@@ -75,6 +77,7 @@ function makeFullOptions(
   return {
     handleError: true,
     handleLoading: true,
+    initialLoading: false,
     errorMessage: "An error occured",
     minDelay: 500,
     loadingColor: "#36d7b7",
@@ -110,7 +113,7 @@ function makeFullOptions(
       ...((options && options.placeholder) || {})
     },
     initialRender: nested
-      ? makeFullOptions((options && options.initialRender) || {}, false)
+      ? makeFullOptions((options && (options.initialRender || options)) || {}, false)
       : undefined
   };
 }
@@ -122,7 +125,10 @@ const Fetcher: React.FC<FetcherProps> = ({
   Fallback
 }) => {
   const _options = useMemo(() => makeFullOptions(options), [options]);
-  const { loading, loadedOnce } = useFetcherStatus(refs);
+  const { loading, loadedOnce } = useFetcherStatus(
+    refs,
+    _options.initialLoading
+  );
 
   useLayoutEffect(() => {
     for (const ref of refs) {
@@ -139,16 +145,18 @@ const Fetcher: React.FC<FetcherProps> = ({
     : _options.initialRender.placeholder;
   return (
     <>
-      <Wrapper refs={refs} options={generalOptions} />
-      {placeholderOptions.show ? (
-        <Placeholder
-          children={Children}
-          options={placeholderOptions}
-          refs={refs}
-        />
-      ) : (
-        Children
-      )}
+      <RefsContext.Provider value={refs}>
+        <Wrapper options={generalOptions} />
+        {placeholderOptions.show ? (
+          <Placeholder
+            children={Children}
+            options={placeholderOptions}
+            initialLoading={generalOptions.initialLoading}
+          />
+        ) : (
+          Children
+        )}
+      </RefsContext.Provider>
     </>
   );
 };

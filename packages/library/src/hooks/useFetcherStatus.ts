@@ -4,7 +4,7 @@ import { useFetcherCallback } from "./useFetcherCallback";
 
 export function useFetcherStatus(
   ref: FetcherRef | FetcherRef[],
-  initialLoading = true
+  initialLoading = false
 ) {
   const refs = Array.isArray(ref) ? ref : [ref];
   const [error, setError] = useState(false);

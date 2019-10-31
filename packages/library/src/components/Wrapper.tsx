@@ -22,7 +22,7 @@ export interface WrapperProps {
 
 const Wrapper: React.FC<WrapperProps> = ({ options, children }) => {
   const refs = useContext(RefsContext);
-  const { error, loading } = useFetcherStatus(refs);
+  const { error, loading } = useFetcherStatus(refs, options.initialLoading);
   const containerElement = useRef(null);
   const progress = useProgress({
     tickDelay: options.progress.tickDelay,
