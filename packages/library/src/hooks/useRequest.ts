@@ -1,5 +1,5 @@
 import { AxiosPromise } from 'axios';
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useLayoutEffect } from 'react';
 import { FetcherRef } from '../fetcherRef';
 
 export function useRequest<T, P>(request: (arg?: P) => AxiosPromise<T>, auto?: boolean) {
@@ -26,7 +26,7 @@ export function useRequest<T, P>(request: (arg?: P) => AxiosPromise<T>, auto?: b
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (auto) {
       ref.fetch<T, P>(request, result => setData(result));
     }

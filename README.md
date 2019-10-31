@@ -6,7 +6,7 @@
 
 ![](useFetcher.gif)
 
-**v1 is slighty still in WIP but usable**.  
+**v1 is slighty still in WIP but usable. READLE is obsolete tho**.  
 `TODO: recalculate placehpmder on resize (w/ debounce)`
 
 # Why?

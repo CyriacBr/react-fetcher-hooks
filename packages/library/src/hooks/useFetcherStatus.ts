@@ -1,17 +1,21 @@
-import { FetcherRef } from '../fetcherRef';
-import { useState, useLayoutEffect, useEffect } from 'react';
-import { useFetcherCallback } from './useFetcherCallback';
+import { FetcherRef } from "../fetcherRef";
+import { useState, useLayoutEffect, useEffect } from "react";
+import { useFetcherCallback } from "./useFetcherCallback";
 
-export function useFetcherStatus(ref: FetcherRef | FetcherRef[]) {
+export function useFetcherStatus(
+  ref: FetcherRef | FetcherRef[],
+  initialLoading = true
+) {
   const refs = Array.isArray(ref) ? ref : [ref];
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(initialLoading);
   const [stack, setStack] = useState(0);
+  const [loadedOnce, setLoadedOnce] = useState(false);
 
   useFetcherCallback(
     {
-      'force-end-loading': onStopForcedLoading,
-      'force-loading': onForceLoading,
+      "force-end-loading": onStopForcedLoading,
+      "force-loading": onForceLoading,
       end: onFetchEnd,
       error: onError,
       start: onFetchStart
@@ -21,8 +25,12 @@ export function useFetcherStatus(ref: FetcherRef | FetcherRef[]) {
   );
 
   useEffect(() => {
-    setLoading(stack > 0);
-  }, [stack]);
+    if (initialLoading) {
+      setLoading(loadedOnce ? stack > 0 : true);
+    } else {
+      setLoading(stack > 0);
+    }
+  }, [stack, loadedOnce]);
 
   function onError() {
     setError(true);
@@ -43,10 +51,12 @@ export function useFetcherStatus(ref: FetcherRef | FetcherRef[]) {
 
   function onFetchEnd() {
     setStack(stack - 1);
+    setLoadedOnce(true);
   }
 
   return {
     error,
-    loading
+    loading,
+    loadedOnce
   };
 }

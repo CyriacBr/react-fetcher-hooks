@@ -10,12 +10,15 @@ import ProgressExample from './components/ProgressExample';
 import PlaceholderExample from './components/PlaceholderExample';
 import PlaceholderExample2 from './components/PlaceholderExample2';
 import PlaceholderFallbackExample from './components/PlaceholderFallbackExample';
+import InitialOptionsExample from './components/InitialOptionsExample';
 
 const App: React.FC = () => {
   return (
     <div className="app-container">
       <p className="title is-1">React Use Fetcher</p>
-      <h3>Basic Usage</h3>
+      <h3>Initial Options Example</h3>
+      <InitialOptionsExample />
+      {/* <h3>Basic Usage</h3>
       <BasicExample />
       <h3>Manual Usage</h3>
       <ManualUsageExample />
@@ -36,7 +39,7 @@ const App: React.FC = () => {
       <h3>Placeholder 2</h3>
       <PlaceholderExample2 />
       <h3>Placeholder Fallback</h3>
-      <PlaceholderFallbackExample />
+      <PlaceholderFallbackExample /> */}
     </div>
   );
 };
