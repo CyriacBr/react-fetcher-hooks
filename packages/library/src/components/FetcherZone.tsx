@@ -1,7 +1,9 @@
-import React, { useContext } from "react";
-import { FetcherOptions, Fetcher } from "./Fetcher";
+import React, { useContext, useMemo } from "react";
+import { FetcherOptions, Fetcher, makeFullOptions } from "./Fetcher";
 import { RefsContext } from "../contexts/refsContext";
 import { useFetcherStatus } from "../hooks";
+import { Wrapper } from "./Wrapper";
+import { FetcherFeedback } from "./FetcherFeedback";
 
 export interface FetcherZoneProps {
   onLoading?: boolean;
@@ -20,13 +22,17 @@ export const FetcherZone: React.FC<FetcherZoneProps> = ({
   const refs = useContext(RefsContext);
   const { loading, error } = useFetcherStatus(refs);
 
-  if (onError && !error) return null;
-  if (onLoaded && loading) return null;
-  if (onLoading && !loading) return null;
-
-  return (
-    <Fetcher options={options} refs={refs}>
-      {children}
-    </Fetcher>
+  const _options = useMemo(
+    () =>
+      makeFullOptions({
+        handleError: onError,
+        handleLoading: onLoading,
+        ...(options || {})
+      }),
+    []
   );
+
+  if ((onError && !error) || (onLoaded && loading) || (onLoading && !loading))
+    return null;
+  return <FetcherFeedback options={_options}>{children}</FetcherFeedback>;
 };

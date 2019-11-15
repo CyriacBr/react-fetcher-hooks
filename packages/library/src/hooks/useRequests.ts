@@ -4,20 +4,26 @@ import { FetcherRef, AxiosPromisesOf } from '../fetcherRef';
 
 export function useRequests<T extends any[], P>(requests: (arg?: P) => AxiosPromisesOf<T>[], auto?: boolean) {
   const ref = useMemo(() => new FetcherRef(), []);
-  const [data, setData] = useState<T>();
+  const [data, setData] = useState<T>([] as any);
 
   function trigger(arg: P, onResult: (data: T) => void): void;
   function trigger(onResult: (data: T) => void): void;
+  function trigger(arg: P): void;
   function trigger(): void;
   function trigger() {
-    if (arguments.length === 0 || typeof arguments[0] !== 'function') {
+    if (arguments.length === 2) {
+      const [arg, onResult] = arguments;
+      ref.fetchMany(() => requests(arg), onResult);
+    } else if (arguments.length === 1) {
+      const [argOrOnResult] = arguments;
+      if (typeof argOrOnResult === 'function') {
+        ref.fetchMany(requests, argOrOnResult);
+      } else {
+        ref.fetchMany(() => requests(argOrOnResult), result => setData(result));
+      }
+    } else {
       ref.fetchMany(requests, result => setData(result));
-      return;
     }
-    const arg: any = arguments.length === 1 ? null : arguments[1];
-    const onResult: (data: T) => void = arguments.length === 1 ? arguments[0] : arguments[1];
-    const handle = arg ? () => requests(arg) : requests;
-    ref.fetchMany(handle, onResult);
   }
 
   useEffect(() => {
@@ -29,5 +35,5 @@ export function useRequests<T extends any[], P>(requests: (arg?: P) => AxiosProm
     };
   }, []);
 
-  return [ref, trigger, data] as [FetcherRef, typeof trigger, T];
+  return [ref, trigger, data, setData] as [FetcherRef, typeof trigger, T, typeof setData];
 }

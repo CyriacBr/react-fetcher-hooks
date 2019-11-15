@@ -1,21 +1,26 @@
-import { AxiosPromise, AxiosResponse } from 'axios';
+import { AxiosPromise, AxiosResponse } from "axios";
 
-export type FetcherEvent = 'start' | 'end' | 'error' | 'force-loading' | 'force-end-loading';
+export type FetcherEvent =
+  | "start"
+  | "end"
+  | "error"
+  | "force-loading"
+  | "force-end-loading";
 
 export interface Task {
-  type: 'fetch' | 'custom';
+  type: "fetch" | "custom";
   getPromise: () => Promise<any>;
   onResult: (data: any) => void;
-  status: 'pending' | 'failed';
+  status: "pending" | "failed";
   canceled: boolean;
   isMultiple: false;
 }
 
 export interface ManyTask {
-  type: 'fetch' | 'custom';
+  type: "fetch" | "custom";
   getPromise: () => Promise<any>[];
   onResult: (data: any) => void;
-  status: 'pending' | 'failed';
+  status: "pending" | "failed";
   canceled: boolean;
   isMultiple: true;
 }
@@ -24,17 +29,27 @@ export type AxiosPromisesOf<T extends any[]> = AxiosPromise<T[number]>;
 export type PromisesOf<T extends any[]> = Promise<T[number]>;
 
 export type FetcherRequest<T, P> = (arg?: P) => AxiosPromise<T>;
-export type FetcherRequests<T extends any[], P> = (arg?: P) => AxiosPromisesOf<T>[];
+export type FetcherRequests<T extends any[], P> = (
+  arg?: P
+) => AxiosPromisesOf<T>[];
 export type FetcherCustomRequest<T, P> = (arg?: P) => Promise<T>;
-export type FetcherCustomRequests<T extends any[], P> = (arg?: P) => PromisesOf<T>[];
+export type FetcherCustomRequests<T extends any[], P> = (
+  arg?: P
+) => PromisesOf<T>[];
 
 export class FetcherRef {
   listeners: { [key: string]: (() => void)[] } = {};
   task: Task | ManyTask;
   minDelay = 300;
+  forcedLoading = false;
 
   on(event: FetcherEvent, fn: () => void) {
     this.listeners[event] = [...(this.listeners[event] || []), fn];
+    // setImmediate(() => {
+    //   if (event === "start" && this.hasPendingTask()) fn();
+    //   if (event === "error" && this.hasFailedTask()) fn();
+    //   if (event === "force-loading" && this.forcedLoading) fn();
+    // });
   }
 
   off(event: FetcherEvent, fn: () => void) {
@@ -48,19 +63,23 @@ export class FetcherRef {
   }
 
   setLoading(value: boolean) {
-    this.fire(value ? 'force-loading' : 'force-end-loading');
+    this.fire(value ? "force-loading" : "force-end-loading");
+    this.forcedLoading = !!value;
   }
 
-  fetch<T, P = any>(request: FetcherRequest<T, P>, onResult: (data: T) => void) {
+  fetch<T, P = any>(
+    request: FetcherRequest<T, P>,
+    onResult: (data: T) => void
+  ) {
     this.task = {
-      type: 'fetch',
+      type: "fetch",
       getPromise: request,
       onResult,
       canceled: false,
       isMultiple: false,
-      status: 'pending'
+      status: "pending"
     };
-    this.processTask(this.task);
+    return this.processTask(this.task);
   }
 
   fetchMany<T extends any[], P = any>(
@@ -68,26 +87,29 @@ export class FetcherRef {
     onResult: (data: T) => void
   ) {
     this.task = {
-      type: 'fetch',
+      type: "fetch",
       getPromise: requests,
       onResult,
       canceled: false,
       isMultiple: true,
-      status: 'pending'
+      status: "pending"
     } as ManyTask;
-    this.processManyTask(this.task);
+    return this.processManyTask(this.task);
   }
 
-  handle<T, P = any>(request: FetcherCustomRequest<T, P>, onResult: (data: T) => void) {
+  handle<T, P = any>(
+    request: FetcherCustomRequest<T, P>,
+    onResult: (data: T) => void
+  ) {
     this.task = {
-      type: 'custom',
+      type: "custom",
       getPromise: request,
       onResult,
       canceled: false,
       isMultiple: false,
-      status: 'pending'
+      status: "pending"
     };
-    this.processTask(this.task);
+    return this.processTask(this.task);
   }
 
   handleMany<T extends any[], P = any>(
@@ -95,14 +117,14 @@ export class FetcherRef {
     onResult: (data: T) => void
   ) {
     this.task = {
-      type: 'custom',
+      type: "custom",
       getPromise: requests,
       onResult,
       canceled: false,
       isMultiple: true,
-      status: 'pending'
+      status: "pending"
     } as ManyTask;
-    this.processManyTask(this.task);
+    return this.processManyTask(this.task);
   }
 
   cancel() {
@@ -112,20 +134,26 @@ export class FetcherRef {
   }
 
   hasFailedTask() {
-    return this.task && this.task.status === 'failed';
+    return this.task && this.task.status === "failed";
+  }
+
+  hasPendingTask() {
+    return this.task && this.task.status === "pending";
   }
 
   retry() {
     if (this.task) {
-      this.task.isMultiple ? this.processManyTask(this.task) : this.processTask(this.task as Task);
+      this.task.isMultiple
+        ? this.processManyTask(this.task)
+        : this.processTask(this.task as Task);
     }
   }
 
   async processTask(task: Task) {
     let { getPromise, onResult, type } = task;
-    task.status = 'pending';
+    task.status = "pending";
     try {
-      this.fire('start');
+      this.fire("start");
       let error = null;
       let [response]: [AxiosResponse, any] = await Promise.all([
         /**
@@ -139,7 +167,7 @@ export class FetcherRef {
         }),
         this._waitDelay()
       ]);
-      this.fire('end');
+      this.fire("end");
       if (task.canceled) {
         return;
       }
@@ -148,11 +176,11 @@ export class FetcherRef {
       }
       this.task = null;
       switch (type) {
-        case 'custom':
+        case "custom":
           return onResult(response);
-        case 'fetch':
+        case "fetch":
           let { data, status } = response;
-          if (String(status)[0] === '2') {
+          if (String(status)[0] === "2") {
             if (data != null) {
               return onResult(data);
             }
@@ -160,20 +188,20 @@ export class FetcherRef {
           }
           break;
       }
-      throw new Error('Invalid response');
+      throw new Error("Invalid response");
     } catch (error) {
-      console.error('Error caught during fetch');
+      console.error("Error caught during fetch");
       console.error(error);
-      task.status = 'failed';
-      this.fire('error');
+      task.status = "failed";
+      this.fire("error");
     }
   }
 
   async processManyTask(task: ManyTask) {
     let { getPromise, onResult, type } = task;
-    task.status = 'pending';
+    task.status = "pending";
     try {
-      this.fire('start');
+      this.fire("start");
       let error = null;
       let [response]: [AxiosResponse[], any] = await Promise.all([
         /**
@@ -187,7 +215,7 @@ export class FetcherRef {
         }),
         this._waitDelay()
       ]);
-      this.fire('end');
+      this.fire("end");
       if (task.canceled) {
         return;
       }
@@ -196,14 +224,14 @@ export class FetcherRef {
       }
       this.task = null;
       switch (type) {
-        case 'custom':
+        case "custom":
           return onResult(response);
-        case 'fetch':
+        case "fetch":
           let dataArr = [];
           let hasError = false;
           for (const res of response) {
             let { data, status } = res;
-            if (String(status)[0] !== '2') {
+            if (String(status)[0] !== "2") {
               hasError = true;
               break;
             }
@@ -214,12 +242,12 @@ export class FetcherRef {
           }
           break;
       }
-      throw new Error('Invalid response');
+      throw new Error("Invalid response");
     } catch (error) {
-      console.error('Error caught during fetch');
+      console.error("Error caught during fetch");
       console.error(error);
-      task.status = 'failed';
-      this.fire('error');
+      task.status = "failed";
+      this.fire("error");
     }
   }
 

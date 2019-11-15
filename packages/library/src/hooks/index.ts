@@ -6,4 +6,5 @@ export * from './useRequests';
 export * from './useCRUDRequests';
 export * from './useFetcher';
 export * from './useFetcherStatus';
+export * from './useFetcherCallbacks';
 export * from './useFetcherCallback';

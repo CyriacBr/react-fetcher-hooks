@@ -5,11 +5,12 @@ import { FetcherRef } from "../fetcherRef";
 import { Wrapper } from "./Wrapper";
 import { Placeholder } from "./Placeholder";
 import { useFetcherStatus } from "..";
-import { useFetcherCallback } from "../hooks";
+import { useFetcherCallbacks } from "../hooks";
 import { RefsContext } from "../contexts/refsContext";
+import { FetcherFeedback } from "./FetcherFeedback";
 
 export interface FetcherProps {
-  refs: FetcherRef[];
+  refs: FetcherRef[] | FetcherRef;
   options?: FetcherOptions;
   Fallback?: React.ComponentType;
 }
@@ -70,7 +71,7 @@ export interface PlaceholderOptions {
   truncateLastLine?: boolean;
 }
 
-function makeFullOptions(
+export function makeFullOptions(
   options: FetcherOptions,
   nested = true
 ): FetcherOptions {
@@ -113,7 +114,10 @@ function makeFullOptions(
       ...((options && options.placeholder) || {})
     },
     initialRender: nested
-      ? makeFullOptions((options && (options.initialRender || options)) || {}, false)
+      ? makeFullOptions(
+          (options && (options.initialRender || options)) || {},
+          false
+        )
       : undefined
   };
 }
@@ -125,13 +129,14 @@ const Fetcher: React.FC<FetcherProps> = ({
   Fallback
 }) => {
   const _options = useMemo(() => makeFullOptions(options), [options]);
+  const _refs = useMemo(() => Array.isArray(refs) ? refs : [refs], [refs]);
   const { loading, loadedOnce } = useFetcherStatus(
     refs,
     _options.initialLoading
   );
 
   useLayoutEffect(() => {
-    for (const ref of refs) {
+    for (const ref of _refs) {
       ref.minDelay = _options.minDelay;
     }
   }, [refs]);
@@ -140,25 +145,17 @@ const Fetcher: React.FC<FetcherProps> = ({
   const generalOptions = loadedOnce
     ? _options
     : _options.initialRender || _options;
-  const placeholderOptions = loadedOnce
-    ? _options.placeholder
-    : _options.initialRender.placeholder;
   return (
     <>
-      <RefsContext.Provider value={refs}>
-        <Wrapper options={generalOptions} />
-        {placeholderOptions.show ? (
-          <Placeholder
-            children={Children}
-            options={placeholderOptions}
-            initialLoading={generalOptions.initialLoading}
-          />
-        ) : (
-          Children
-        )}
+      <RefsContext.Provider value={_refs}>
+        <FetcherFeedback options={generalOptions}>{Children}</FetcherFeedback>
       </RefsContext.Provider>
     </>
   );
 };
+//@ts-ignore
+// Fetcher.whyDidYouRender = {
+//   logOnDifferentValues: true
+// };
 
 export { Fetcher };

@@ -12,25 +12,19 @@ import { FetcherRef } from "../fetcherRef";
 import { LoadingDisplay } from "./LoadingDisplay";
 import { ErrorDisplay } from "./ErrorDisplay";
 import { useFetcherStatus } from "../hooks/useFetcherStatus";
-import { useFetcherCallback } from "../hooks";
+import { useFetcherCallbacks } from "../hooks";
 import Progress from "./Progress";
 import { RefsContext } from "../contexts/refsContext";
+import ProgressDisplay from "./ProgressDisplay";
 
 export interface WrapperProps {
   options: FetcherOptions;
 }
 
-const Wrapper: React.FC<WrapperProps> = ({ options, children }) => {
+const Wrapper: React.FC<WrapperProps> = ({ options }) => {
   const refs = useContext(RefsContext);
   const { error, loading } = useFetcherStatus(refs, options.initialLoading);
   const containerElement = useRef(null);
-  const progress = useProgress({
-    tickDelay: options.progress.tickDelay,
-    valuePerTick: options.progress.valuePerTick
-  });
-  const progressColor = error
-    ? options.progress.errorColor
-    : options.progress.color;
 
   const {
     wrapperStyles,
@@ -50,38 +44,29 @@ const Wrapper: React.FC<WrapperProps> = ({ options, children }) => {
       adjustBorderRadius(containerElement.current);
   });
 
-  useFetcherCallback(
-    {
-      start: onFetchStart,
-      end: onFetchEnd
-    },
-    refs,
-    [progress]
-  );
-
-  function onFetchStart() {
-    progress.start();
-  }
-
-  function onFetchEnd() {
-    progress.done();
-  }
-
   return (
     <>
+      {options.progress.show && options.handleLoading && (
+        <ProgressDisplay
+          error={error}
+          loading={loading}
+          options={options}
+          refs={refs}
+        />
+      )}
       {((options.handleLoading && loading) ||
-        (options.handleError && error) ||
-        (options.handleLoading && options.progress.show && progress.show)) && (
+        (options.handleError && error)) && (
         <div
           className={wrapperClassCSS}
           ref={containerElement}
           style={finalWrapperStyles}
         >
-          {options.progress.show && (
-            <Progress ref={progress.ref} color={progressColor} />
+          {options.handleLoading && (
+            <LoadingDisplay loading={loading} refs={refs} options={options} />
           )}
-          <LoadingDisplay loading={loading} refs={refs} options={options} />
-          <ErrorDisplay error={error} refs={refs} options={options} />
+          {options.handleError && (
+            <ErrorDisplay error={error} refs={refs} options={options} />
+          )}
         </div>
       )}
     </>

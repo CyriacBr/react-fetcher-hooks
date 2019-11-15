@@ -1,28 +1,24 @@
-import { FetcherEvent, FetcherRef } from '../fetcherRef';
-import { useLayoutEffect } from 'react';
+import { FetcherEvent, FetcherRef } from "../fetcherRef";
+import { useLayoutEffect, useCallback } from "react";
 
-type EventCallbacks = {
-  [T in FetcherEvent]?: () => void;
-};
-
-export function useFetcherCallback(
-  callbacks: EventCallbacks,
-  ref: FetcherRef | FetcherRef[],
-  deps?: readonly any[]
-) {
+export function useFetcherCallback(ref: FetcherRef | FetcherRef[]) {
   const refs = Array.isArray(ref) ? ref : [ref];
-  useLayoutEffect(() => {
-    for (const ref of refs) {
-      for (const [key, callback] of Object.entries(callbacks)) {
-        ref.on(key as any, callback);
-      }
-    }
-    return () => {
-      for (const ref of refs) {
-        for (const [key, callback] of Object.entries(callbacks)) {
-          ref.off(key as any, callback);
+
+  const handler = {
+    on: (event: FetcherEvent, cb: () => void, deps?: any[]) => {
+      const _callback = useCallback(cb, deps);
+      useLayoutEffect(() => {
+        for (const ref of refs) {
+          ref.on(event, _callback);
         }
-      }
-    };
-  }, deps || []);
+        return () => {
+          for (const ref of refs) {
+            ref.off(event, _callback);
+          }
+        };
+      }, deps || []);
+      return handler;
+    }
+  };
+  return handler;
 }

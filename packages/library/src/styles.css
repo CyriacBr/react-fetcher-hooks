@@ -55,7 +55,9 @@
   width: 0%;
   height: 2px;
   position: relative;
-  transition: all 200ms ease 0s;
+  transition-timing-function: ease;
+  transition-duration: 200ms;
+  transition-property: none;
 }
 
 .progress-wrapper .peg {

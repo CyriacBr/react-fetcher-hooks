@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import Progress from '../components/Progress';
-import React from 'react';
-import { ProgressOptions } from '../components/Fetcher';
+import { useState, useEffect, useRef, useMemo } from "react";
+import { ProgressOptions } from "../components/Fetcher";
 
 function waitDelay(value: number) {
   return new Promise(resolve => {
@@ -14,7 +12,7 @@ function waitDelay(value: number) {
 export function useProgress(options: ProgressOptions) {
   const [show, setShow] = useState(true);
   const [started, setStarted] = useState(false);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState(true);
   const [value, setValue] = useState(0);
   const ref = useRef<HTMLDivElement>();
 
@@ -68,7 +66,8 @@ export function useProgress(options: ProgressOptions) {
   useEffect(() => {
     let el = ref.current;
     if (el) {
-      //el.style.transform = `translate3d(-${100 - value}%, 0px, 0px)`;
+      const current = parseFloat(el.style.width);
+      el.style.transitionProperty = current > value ? "none" : "all";
       el.style.width = `${value}%`;
     }
   }, [value]);

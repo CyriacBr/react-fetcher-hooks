@@ -8,6 +8,6 @@ export function useFetcher() {
     return () => {
       ref.cancel();
     }
-  });
+  }, []);
   return ref;
 }
