@@ -61,7 +61,7 @@ const Wrapper: React.FC<WrapperProps> = ({ options }) => {
           ref={containerElement}
           style={finalWrapperStyles}
         >
-          {options.handleLoading && (
+          {options.handleLoading && !error && (
             <LoadingDisplay loading={loading} refs={refs} options={options} />
           )}
           {options.handleError && (
