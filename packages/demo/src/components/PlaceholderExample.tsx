@@ -11,13 +11,11 @@ const options: FetcherOptions = {
 
 const PlaceholderExample = () => {
   const ref = useFetcher();
-  useEffect(() => {
-    ref.setLoading(true);
-  }, []);
+  ref.setLoading(true);
 
   return (
     <div className='test-container'>
-      <Fetcher refs={[ref]} options={options}>
+      <Fetcher refs={ref} options={options}>
         <span className='--p'>Placeholder Example</span>
         <br />
         <span className='--p'>

@@ -10,7 +10,7 @@ const FailExample = () => {
 
   return (
     <div className='test-container'>
-      <Fetcher refs={[ref]}>
+      <Fetcher refs={ref}>
         <span>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum accumsan
           lorem, id tristique erat. Ut elementum dui lobortis ex eleifend eleifend. Curabitur

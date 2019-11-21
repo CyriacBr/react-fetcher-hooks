@@ -8,7 +8,7 @@ const options: FetcherOptions = {
   }
 };
 
-const BasicExample = () => {
+const ProgressExample = () => {
   const [ref, getJson, json] = useRequest(
     () => axios.get<any>('https://api.chucknorris.io/jokes/random'),
     true
@@ -33,4 +33,4 @@ const BasicExample = () => {
   );
 };
 
-export default BasicExample;
+export default ProgressExample;

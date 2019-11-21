@@ -1,12 +1,12 @@
 ---
 name: Getting Started
 route: /
-order: 1
 ---
 
 import 'bulma/css/bulma.css';
 import '../src/index.css';
 import 'react-fetcher-hooks/dist/styles.css';
+import Preview from '../src/Preview.tsx';
 
 # Why?
 The goal of this library is to take away the pain of manually handling fetching states (idle, loading, error)
@@ -17,9 +17,23 @@ It reduces boilerplate but also give you a wide range of customization tools for
 # An example is worth a thousand words
 
 ### 1. Create a fetcher reference using one of the 6 hooks the library provides
-```ts
-const ref = useFetcher();
-```
+
+<Preview tabNames={['JavaScript', 'TypeScript']}>
+  <editor>
+{
+`const ref = useFetcher();
+// or
+const [ref, getItem, item] = useRequest((id) => axios.get(\`myapi.com/items/\${id}\`));
+`}
+  </editor>
+  <editor>
+{
+`const ref = useFetcher();
+// or
+const [ref, getItem, item] = useRequest((id: number) => axios.get<Item>(\`myapi.com/items/\${id}\`));
+`}
+  </editor>
+</Preview>
 
 #### 2. Wrap your content around the `Fetcher` component
 ```tsx
@@ -33,6 +47,8 @@ const ref = useFetcher();
 #### 3. Use the fetcher reference to perform HTTP or custom requests
 ```ts
 ref.fetch(...);
+// or
+getItem(1);
 ```
 
 #### 4. Let `Fetcher` handle the visual feedback:

@@ -4,11 +4,11 @@ import { BeatLoader } from 'react-spinners';
 
 const CustomLoaderExample = () => {
   const ref = useFetcher();
-  useEffect(() => ref.setLoading(true), []);
+  ref.setLoading(true);
 
   return (
     <div className='test-container'>
-      <Fetcher refs={[ref]}>
+      <Fetcher refs={ref}>
         <span>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas fermentum accumsan
           lorem, id tristique erat. Ut elementum dui lobortis ex eleifend eleifend. Curabitur

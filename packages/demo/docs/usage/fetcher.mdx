@@ -2,7 +2,6 @@
 name: Fetcher
 route: /usage/fetcher
 menu: Usage
-order: 2
 ---
 
 import 'bulma/css/bulma.css';
@@ -14,7 +13,7 @@ import 'react-fetcher-hooks/dist/styles.css';
 The role of `Fetcher` is to render the visual feedback of the fetcher references it is tied to.
 Note that `Fetcher` is a react **fragment** and will NOT mess up with your markup. 
 For this reason, you need to **always** wrap it with a DOM element, and make sure it can take
-and inlined `position: relative`. It is done automatically.
+an inlined `position: relative`. This is done automatically.
 ```tsx
 <div>
   <Fetcher refs={refs}>
@@ -23,7 +22,8 @@ and inlined `position: relative`. It is done automatically.
 </div>
 ```
 
-Also note that `Fetcher`'s children, your content, will NOT re-render when the visual feedback change.
+Also note that `Fetcher`'s children, your content, will **NOT** re-render when the visual feedback change.  
+`Fetcher` will thus not cause unescessary rerender and mess up with your app flow.
 
 ## Fallback
 

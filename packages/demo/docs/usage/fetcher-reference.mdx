@@ -7,6 +7,7 @@ menu: Usage
 import 'bulma/css/bulma.css';
 import '../../src/index.css';
 import 'react-fetcher-hooks/dist/styles.css';
+import Preview from '../../src/Preview.tsx';
 
 # Fetcher Reference
 
@@ -19,8 +20,11 @@ do not need to set up manually a cleanup function.
 ## Example
 
 Here's an example on how to fetch from a REST GET endpoint with `useRequest`, which let you use your own axios instance:
-```ts
-const [ref, get, items] = useRequest(() => axios.get('http://myapi.com'), true);
+
+<Preview tabNames={['JavaScript', 'TypeScript']}>
+  <editor>
+{
+`const [ref, get, items] = useRequest(() => axios.get('http://myapi.com'), true);
 //-- 'items' is the result of the axios request
 //-- 'get' can be called at later date to re-fetch
 
@@ -28,12 +32,29 @@ const [ref, get, items] = useRequest(() => axios.get('http://myapi.com'), true);
 <Fetcher refs={ref}>
   My Content
 </Fetcher>
-```
-However, note that you are free to use the hooks without a `Fetcher` tied to it.
+`}
+  </editor>
+  <editor>
+{
+`const [ref, get, items] = useRequest(() => axios.get<Item[]>('http://myapi.com'), true);
+//-- 'items' is the result of the axios request
+//-- 'get' can be called at later date to re-fetch
+
+//...
+<Fetcher refs={ref}>
+  My Content
+</Fetcher>
+`}
+  </editor>
+</Preview>
+However, you are free to use the hooks without `Fetcher`.
 
 Here's another example for a CRUD client implementation.
-```ts
-const [getRef, getItems, items] = useRequest(() => axios.get('http://myapi.com'), true);
+
+<Preview tabNames={['JavaScript', 'TypeScript']}>
+  <editor>
+{
+`const [getRef, getItems, items] = useRequest(() => axios.get('http://myapi.com'), true);
 const [postRef, postItem] = useRequest((data) => axios.post('http://myapi.com/', data));
 const [deleteRef, deleteItem] = useRequest((id) => axios.delete('http://myapi.com/' + id));
 const [updateRef, updateItem] = useRequest(([id, data]) => axios.patch('http://myapi.com/' + id, data));
@@ -48,13 +69,37 @@ updateItem([1, data]);
 <Fetcher refs={[getRef, postRef, updateRef, deleteRef]}>
   My Content
 </Fetcher>
-```
+`}
+  </editor>
+  <editor>
+{
+`const [getRef, getItems, items] = useRequest(() => axios.get<Item[]>('http://myapi.com'), true);
+const [postRef, postItem] = useRequest((data: Item) => axios.post<Item>('http://myapi.com/', data));
+const [deleteRef, deleteItem] = useRequest((id: number) => axios.delete('http://myapi.com/' + id));
+const [updateRef, updateItem] = useRequest(([id, data]: [number, Item]) => axios.patch<Item>('http://myapi.com/' + id, data));
+
+//-- Usage
+getItems();
+postItem(data);
+deleteItem(1); 
+updateItem([1, data]);
+
+//...
+<Fetcher refs={[getRef, postRef, updateRef, deleteRef]}>
+  My Content
+</Fetcher>
+`}
+  </editor>
+</Preview>
 
 ## Composability
 Because fetching is based on hooks, you can combine, reuse them and create your own custom hooks
 to gain in readability and simplicity. The library contains a built-in hook which reflects just that.
-```ts
-const users = useCRUDRequest('http://myapi.com');
+
+<Preview tabNames={['JavaScript', 'TypeScript']}>
+  <editor>
+{
+`const users = useCRUDRequest('http://myapi.com/users');
 
 //-- Usage
 users.get();
@@ -67,4 +112,23 @@ users.update([1, data]);
 <Fetcher refs={users.refs}>
   My Content
 </Fetcher>
-```
+`}
+  </editor>
+  <editor>
+{
+`const users = useCRUDRequest<Item>('http://myapi.com/users');
+
+//-- Usage
+users.get();
+users.items; //-- GET results
+users.post(data);
+users.delete(1);
+users.update([1, data]);
+
+//...
+<Fetcher refs={users.refs}>
+  My Content
+</Fetcher>
+`}
+  </editor>
+</Preview>

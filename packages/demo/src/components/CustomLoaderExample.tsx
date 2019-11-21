@@ -4,7 +4,7 @@ import { BeatLoader } from 'react-spinners';
 
 const CustomLoaderExample = () => {
   const ref = useFetcher();
-  useEffect(() => ref.setLoading(true), []);
+  ref.setLoading(true)
 
   return (
     <div className='test-container'>

@@ -35,17 +35,6 @@
   },
   "props": [
     {
-      "key": "src/App.tsx",
-      "value": [
-        {
-          "description": "",
-          "displayName": "App",
-          "methods": [],
-          "props": {}
-        }
-      ]
-    },
-    {
       "key": "src/Preview.tsx",
       "value": [
         {
@@ -67,10 +56,6 @@
       ]
     },
     {
-      "key": "src/components/BasicExample.tsx",
-      "value": []
-    },
-    {
       "key": "src/components/CRUDExample.tsx",
       "value": []
     },
@@ -79,11 +64,19 @@
       "value": []
     },
     {
-      "key": "src/components/CustomLoaderExample.tsx",
+      "key": "src/components/FailButtonExample.tsx",
       "value": []
     },
     {
-      "key": "src/components/FailButtonExample.tsx",
+      "key": "src/components/ManualUsageExample.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/PlaceholderExample2.tsx",
+      "value": []
+    },
+    {
+      "key": "src/components/BasicExample.tsx",
       "value": []
     },
     {
@@ -95,16 +88,23 @@
       "value": []
     },
     {
-      "key": "src/components/ManualUsageExample.tsx",
-      "value": []
-    },
-    {
       "key": "src/components/PlaceholderExample.tsx",
       "value": []
     },
     {
-      "key": "src/components/PlaceholderExample2.tsx",
+      "key": "src/components/CustomLoaderExample.tsx",
       "value": []
+    },
+    {
+      "key": "src/App.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "App",
+          "methods": [],
+          "props": {}
+        }
+      ]
     },
     {
       "key": "src/components/ProgressExample.tsx",
@@ -117,7 +117,6 @@
       "value": {
         "name": "Getting Started",
         "route": "/react-fetcher-hooks/",
-        "order": 1,
         "id": "73498ad0e1e62a714b08085d318f9de1",
         "filepath": "docs/index.mdx",
         "link": "",
@@ -286,65 +285,6 @@
       }
     },
     {
-      "key": "docs/usage/fetcher-reference.mdx",
-      "value": {
-        "name": "Fetcher Reference",
-        "route": "/react-fetcher-hooks/usage/fetcher-reference",
-        "menu": "Usage",
-        "id": "fa9b1782beedc45d889e124e94efcc0b",
-        "filepath": "docs/usage/fetcher-reference.mdx",
-        "link": "",
-        "slug": "docs-usage-fetcher-reference",
-        "headings": [
-          {
-            "slug": "fetcher-reference",
-            "depth": 1,
-            "value": "Fetcher Reference"
-          },
-          {
-            "slug": "example",
-            "depth": 2,
-            "value": "Example"
-          },
-          {
-            "slug": "composability",
-            "depth": 2,
-            "value": "Composability"
-          }
-        ]
-      }
-    },
-    {
-      "key": "docs/usage/fetcher.mdx",
-      "value": {
-        "name": "Fetcher",
-        "route": "/react-fetcher-hooks/usage/fetcher",
-        "menu": "Usage",
-        "order": 2,
-        "id": "6f9800504a8c54a4bdabb6cb9424ff73",
-        "filepath": "docs/usage/fetcher.mdx",
-        "link": "",
-        "slug": "docs-usage-fetcher",
-        "headings": [
-          {
-            "slug": "the-fetcher-component",
-            "depth": 1,
-            "value": "The Fetcher Component"
-          },
-          {
-            "slug": "fallback",
-            "depth": 2,
-            "value": "Fallback"
-          },
-          {
-            "slug": "options",
-            "depth": 2,
-            "value": "Options"
-          }
-        ]
-      }
-    },
-    {
       "key": "docs/states/error.mdx",
       "value": {
         "name": "Error",
@@ -393,6 +333,64 @@
             "slug": "placeholder",
             "depth": 2,
             "value": "Placeholder"
+          }
+        ]
+      }
+    },
+    {
+      "key": "docs/usage/fetcher-reference.mdx",
+      "value": {
+        "name": "Fetcher Reference",
+        "route": "/react-fetcher-hooks/usage/fetcher-reference",
+        "menu": "Usage",
+        "id": "fa9b1782beedc45d889e124e94efcc0b",
+        "filepath": "docs/usage/fetcher-reference.mdx",
+        "link": "",
+        "slug": "docs-usage-fetcher-reference",
+        "headings": [
+          {
+            "slug": "fetcher-reference",
+            "depth": 1,
+            "value": "Fetcher Reference"
+          },
+          {
+            "slug": "example",
+            "depth": 2,
+            "value": "Example"
+          },
+          {
+            "slug": "composability",
+            "depth": 2,
+            "value": "Composability"
+          }
+        ]
+      }
+    },
+    {
+      "key": "docs/usage/fetcher.mdx",
+      "value": {
+        "name": "Fetcher",
+        "route": "/react-fetcher-hooks/usage/fetcher",
+        "menu": "Usage",
+        "id": "6f9800504a8c54a4bdabb6cb9424ff73",
+        "filepath": "docs/usage/fetcher.mdx",
+        "link": "",
+        "slug": "docs-usage-fetcher",
+        "headings": [
+          {
+            "slug": "the-fetcher-component",
+            "depth": 1,
+            "value": "The Fetcher Component"
+          },
+          {
+            "slug": "fallback",
+            "depth": 2,
+            "value": "Fallback"
+          },
+          {
+            "slug": "options",
+            "depth": 2,
+            "value": "Options"
           }
         ]
       }

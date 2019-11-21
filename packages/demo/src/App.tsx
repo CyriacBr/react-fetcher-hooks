@@ -11,16 +11,19 @@ import PlaceholderExample from './components/PlaceholderExample';
 import PlaceholderExample2 from './components/PlaceholderExample2';
 import PlaceholderFallbackExample from './components/PlaceholderFallbackExample';
 import InitialOptionsExample from './components/InitialOptionsExample';
+import ZonesExample from './components/ZonesExample';
 
 const App: React.FC = () => {
   return (
     <div className="app-container">
       <p className="title is-1">React Use Fetcher</p>
       {/* <h3>Initial Options Example</h3>
-      <InitialOptionsExample />
+      <InitialOptionsExample /> */}
       <h3>Basic Usage</h3>
       <BasicExample />
-      <h3>Manual Usage</h3>
+      <h3>Progress</h3>
+      <ProgressExample />
+      {/* <h3>Manual Usage</h3>
       <ManualUsageExample />
       <h3>CRUD</h3>
       <CRUDExample />
@@ -32,14 +35,14 @@ const App: React.FC = () => {
       <FailExample />
       <h3>Fail Custom Button</h3>
       <FailButtonExample />
-      <h3>Progress</h3>
-      <ProgressExample /> */}
       <h3>Placeholder</h3>
-      <PlaceholderExample />
+      <PlaceholderExample /> */}
       {/* <h3>Placeholder 2</h3>
       <PlaceholderExample2 />
       <h3>Placeholder Fallback</h3>
       <PlaceholderFallbackExample /> */}
+      {/* <h3>Zone Examples</h3>
+      <ZonesExample /> */}
     </div>
   );
 };

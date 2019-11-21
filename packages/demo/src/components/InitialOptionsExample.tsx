@@ -13,6 +13,7 @@ const InitialOptionsExample = () => {
       <Fetcher
         refs={[ref]}
         options={{
+          initialLoading: true,
           initialRender: {
             placeholder: { show: true }
           }
