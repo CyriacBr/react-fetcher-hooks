@@ -59,4 +59,4 @@ There's no need for handling errors on this level. If any happens,
 the callback just won't be called and the visual feedback will be handled automatically.
 
 # Docs
-https://cyriacbr.github.io/react-use-fetcher/
+https://cyriacbr.github.io/react-fetcher-hooks/

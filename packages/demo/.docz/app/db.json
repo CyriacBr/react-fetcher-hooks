@@ -35,6 +35,17 @@
   },
   "props": [
     {
+      "key": "src/App.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "App",
+          "methods": [],
+          "props": {}
+        }
+      ]
+    },
+    {
       "key": "src/Preview.tsx",
       "value": [
         {
@@ -56,6 +67,10 @@
       ]
     },
     {
+      "key": "src/components/BasicExample.tsx",
+      "value": []
+    },
+    {
       "key": "src/components/CRUDExample.tsx",
       "value": []
     },
@@ -64,19 +79,11 @@
       "value": []
     },
     {
+      "key": "src/components/CustomLoaderExample.tsx",
+      "value": []
+    },
+    {
       "key": "src/components/FailButtonExample.tsx",
-      "value": []
-    },
-    {
-      "key": "src/components/ManualUsageExample.tsx",
-      "value": []
-    },
-    {
-      "key": "src/components/PlaceholderExample2.tsx",
-      "value": []
-    },
-    {
-      "key": "src/components/BasicExample.tsx",
       "value": []
     },
     {
@@ -88,23 +95,16 @@
       "value": []
     },
     {
+      "key": "src/components/ManualUsageExample.tsx",
+      "value": []
+    },
+    {
       "key": "src/components/PlaceholderExample.tsx",
       "value": []
     },
     {
-      "key": "src/components/CustomLoaderExample.tsx",
+      "key": "src/components/PlaceholderExample2.tsx",
       "value": []
-    },
-    {
-      "key": "src/App.tsx",
-      "value": [
-        {
-          "description": "",
-          "displayName": "App",
-          "methods": [],
-          "props": {}
-        }
-      ]
     },
     {
       "key": "src/components/ProgressExample.tsx",
