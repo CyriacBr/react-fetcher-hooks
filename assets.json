@@ -1,0 +1,23 @@
+{
+  "vendors.js": "/react-fetcher-hooks/static/js/vendors.9265254d.js",
+  "vendors.js.map": "/react-fetcher-hooks/static/js/vendors.82435536e1c2cfc8da27.js.map",
+  "docs-hooks-use-fetcher~docs-hooks-use-request~docs-index~docs-states-error~docs-states-loading.js": "/react-fetcher-hooks/static/js/docs-hooks-use-fetcher~docs-hooks-use-request~docs-index~docs-states-error~docs-states-loading.385fbfac.js",
+  "docs-hooks-use-fetcher~docs-hooks-use-request~docs-index~docs-states-error~docs-states-loading.js.map": "/react-fetcher-hooks/static/js/docs-hooks-use-fetcher~docs-hooks-use-request~docs-index~docs-states-error~docs-states-loading.82435536e1c2cfc8da27.js.map",
+  "app.js": "/react-fetcher-hooks/static/js/app.82435536e1c2cfc8da27.js",
+  "app.js.map": "/react-fetcher-hooks/static/js/app.82435536e1c2cfc8da27.js.map",
+  "docs-hooks-use-fetcher.js": "/react-fetcher-hooks/static/js/docs-hooks-use-fetcher.5194543a.js",
+  "docs-hooks-use-fetcher.js.map": "/react-fetcher-hooks/static/js/docs-hooks-use-fetcher.82435536e1c2cfc8da27.js.map",
+  "docs-hooks-use-request.js": "/react-fetcher-hooks/static/js/docs-hooks-use-request.e75c176f.js",
+  "docs-hooks-use-request.js.map": "/react-fetcher-hooks/static/js/docs-hooks-use-request.82435536e1c2cfc8da27.js.map",
+  "docs-index.js": "/react-fetcher-hooks/static/js/docs-index.64f514b0.js",
+  "docs-index.js.map": "/react-fetcher-hooks/static/js/docs-index.82435536e1c2cfc8da27.js.map",
+  "docs-states-error.js": "/react-fetcher-hooks/static/js/docs-states-error.a75c97b4.js",
+  "docs-states-error.js.map": "/react-fetcher-hooks/static/js/docs-states-error.82435536e1c2cfc8da27.js.map",
+  "docs-states-loading.js": "/react-fetcher-hooks/static/js/docs-states-loading.7a13b2ce.js",
+  "docs-states-loading.js.map": "/react-fetcher-hooks/static/js/docs-states-loading.82435536e1c2cfc8da27.js.map",
+  "docs-usage-fetcher.js": "/react-fetcher-hooks/static/js/docs-usage-fetcher.82887808.js",
+  "docs-usage-fetcher.js.map": "/react-fetcher-hooks/static/js/docs-usage-fetcher.82435536e1c2cfc8da27.js.map",
+  "docs-usage-fetcher-reference.js": "/react-fetcher-hooks/static/js/docs-usage-fetcher-reference.14f0bc09.js",
+  "docs-usage-fetcher-reference.js.map": "/react-fetcher-hooks/static/js/docs-usage-fetcher-reference.82435536e1c2cfc8da27.js.map",
+  "index.html": "/react-fetcher-hooks/index.html"
+}
